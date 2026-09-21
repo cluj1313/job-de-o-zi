@@ -55,6 +55,8 @@ export interface HubLink {
   title: string;
   url: string;
   description?: string;
+  /** Optional thumb/photo URL — admin can edit */
+  photo?: string;
 }
 
 export interface AppSettings {
