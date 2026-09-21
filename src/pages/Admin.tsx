@@ -126,6 +126,8 @@ export function Admin() {
                 className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="URL" />
               <input value={link.description||''} onChange={(e) => { const n=[...links]; n[i]={...link,description:e.target.value}; setLinks(n); }}
                 className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="Descriere" />
+              <input value={link.photo||''} onChange={(e) => { const n=[...links]; n[i]={...link,photo:e.target.value}; setLinks(n); }}
+                className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="Photo / thumb URL" />
             </div>
           ))}
           <button type="button" onClick={() => setLinks([...links,{id:'h'+Date.now(),title:'Link nou',url:'https://',description:''}])}
