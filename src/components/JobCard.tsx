@@ -37,7 +37,7 @@ export function JobCard({ job, user }: Props) {
         >
           <Heart
             size={18}
-            className={liked ? 'fill-terracotta text-terracotta' : 'text-gray-500'}
+            className={liked ? 'fill-terracotta text-terracotta' : 'text-earth-muted'}
           />
         </button>
         <span className="absolute bottom-2 left-2 bg-terracotta text-white text-xs font-semibold px-2.5 py-1 rounded-full">
@@ -45,16 +45,16 @@ export function JobCard({ job, user }: Props) {
         </span>
       </div>
       <div className="p-3">
-        <h3 className="font-semibold text-earth text-[15px] leading-snug line-clamp-2">
+        <h3 className="font-bold text-earth text-base leading-snug line-clamp-2">
           {job.title}
         </h3>
-        <div className="mt-1.5 flex items-center gap-1 text-sm text-gray-500">
+        <div className="mt-1.5 flex items-center gap-1 text-sm text-earth-muted font-medium">
           <MapPin size={14} />
           <span>{job.city}</span>
         </div>
         {user && (
           <div className="mt-2 flex items-center justify-between">
-            <span className="text-sm text-gray-700 truncate">{user.name}</span>
+            <span className="text-sm text-earth font-medium truncate">{user.name}</span>
             <StarRating value={user.rating} count={user.ratingCount} size={12} />
           </div>
         )}
