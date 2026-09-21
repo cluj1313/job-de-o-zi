@@ -38,49 +38,46 @@ Alți useri demo: `0722111001`–`0722111007` / parolă `demo123`.
 
 ## Funcționalități MVP
 
-1. **Acasă** — cover, Share (`navigator.share` + clipboard), butoane Ofer / Caut
-2. **Liste** — carduri verticale (poză, titlu, lei/oră, oraș, stele, inimă) + filtre
-3. **Auth** — înregistrare / login (nume, telefon, parolă, oraș) + sesiune localStorage
-4. **Avatar** — cameră sau fișier + refacere (fără video)
-5. **Profil** — cover + avatar rotund, Call / WhatsApp / Mesaj, rating de la 0, recenzii + răspuns oferent
+1. **Acasă** — cover, Share, butoane Ofer / Caut
+2. **Liste** — carduri + filtre (oraș, lei/oră, rating)
+3. **Auth** — înregistrare / login + sesiune localStorage
+4. **Avatar** — cameră sau fișier + refacere
+5. **Profil** — cover + avatar, Call / WhatsApp / Mesaj, rating, recenzii
 6. **Creează ofertă**
 7. **Favorite** persistente
 8. **Mesaje** mock + broadcast admin
-9. **Setări** — hub cards (default Pitch Sponsor) + prezentare proprietar
-10. **Admin** — blocare/ștergere useri, mesaje, link-uri hub, ștergere recenzii
+9. **Setări** — hub (Pitch Sponsor) + prezentare proprietar
+10. **Admin** — useri, mesaje, hub links, recenzii
 
 ## Navigare jos
 
 Acasă · Mesaje · **Favorite** (centru) · Cont · Setări  
-Activ: bandă maroon `#7a1f2b` + text/icon alb.
+Activ: maroon `#7a1f2b` + text/icon alb.
 
 ## Cover images
 
-Place under `public/assets/`:
+Add under `public/assets/` (present in local workspace):
 
 - `cover-jobs.jpg`
 - `cover-watch.jpg`
 
-(Included in the local workspace; add them to the repo if missing after clone.)
-
 ## TODO (post-MVP)
 
-- [ ] Avatar video (înregistrare scurtă)
-- [ ] GPS / geolocație pentru anunțuri din apropiere
+- [ ] Avatar video
+- [ ] GPS / geolocație
 - [ ] Plăți / escrow
-- [ ] Backend real (API + auth)
+- [ ] Backend real
 - [ ] Push notifications
-- [ ] Paginare / căutare full-text
 
-## Structură
+## Gaps / follow-up
 
-```
-public/assets/   cover-jobs.jpg, cover-watch.jpg
-src/pages/       ecrane
-src/components/  BottomNav, JobCard, …
-src/store/       localStorage store
-src/data/seed.ts date demo (8 joburi + useri)
-```
+Complete runnable app lives at local `/workspace/job-de-o-zi`.
+
+If missing after clone, copy from local:
+
+- `src/pages/Profile.tsx` (if absent)
+- `public/assets/cover-*.jpg`
+- `package-lock.json` (or run `npm install`)
 
 ## Licență
 
