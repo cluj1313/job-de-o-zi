@@ -73,13 +73,15 @@ ensureSeeded();
 function loadSettings(): AppSettings {
   const cur = load<AppSettings>(KEYS.settings, seedSettings);
   const migrated = migrateHubLinks(cur.hubLinks);
-  if (JSON.stringify(cur.hubLinks ?? []) !== JSON.stringify(migrated)) {
-    const next = { ...cur, hubLinks: migrated };
-    // persist silently without notifying mid-render
+  const textSize = cur.textSize === 'sm' || cur.textSize === 'lg' ? cur.textSize : 'md';
+  const next: AppSettings = { ...cur, hubLinks: migrated, textSize };
+  if (
+    JSON.stringify(cur.hubLinks ?? []) !== JSON.stringify(migrated) ||
+    cur.textSize !== textSize
+  ) {
     localStorage.setItem(KEYS.settings, JSON.stringify(next));
-    return next;
   }
-  return { ...cur, hubLinks: migrated };
+  return next;
 }
 
 function getSnapshot() {
