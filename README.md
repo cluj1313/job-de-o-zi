@@ -54,6 +54,15 @@ Alți useri demo: `0722111001`–`0722111007` / parolă `demo123`.
 Acasă · Mesaje · **Favorite** (centru) · Cont · Setări  
 Activ: bandă maroon `#7a1f2b` + text/icon alb.
 
+## Cover images
+
+Place under `public/assets/`:
+
+- `cover-jobs.jpg`
+- `cover-watch.jpg`
+
+(Included in the local workspace; add them to the repo if missing after clone.)
+
 ## TODO (post-MVP)
 
 - [ ] Avatar video (înregistrare scurtă)
@@ -71,7 +80,6 @@ src/pages/       ecrane
 src/components/  BottomNav, JobCard, …
 src/store/       localStorage store
 src/data/seed.ts date demo (8 joburi + useri)
-src/assets/covers.ts  imagini cover embedate (data URL)
 ```
 
 ## Licență
