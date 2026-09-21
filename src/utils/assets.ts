@@ -1,7 +1,9 @@
+import { coverJobs } from './coverJobs';
+
 const base = import.meta.env.BASE_URL;
 
-/** Home / jobs cover — warm collage (jobs + pocket watch) */
-export const coverJobs = `${base}assets/cover-jobs.jpg`;
+/** Home / jobs cover — warm collage (jobs + pocket watch), embedded data URL */
+export { coverJobs };
 export const coverWatch = `${base}assets/cover-watch.jpg`;
 
 /** Resolve known cover paths / legacy refs to covers. */
