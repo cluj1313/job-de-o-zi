@@ -59,7 +59,11 @@ export interface HubLink {
   photo?: string;
 }
 
+export type TextSize = 'sm' | 'md' | 'lg';
+
 export interface AppSettings {
   ownerPresentation: string;
   hubLinks: HubLink[];
+  /** Mic / Normal / Mare — applied via html class + --text-scale */
+  textSize?: TextSize;
 }

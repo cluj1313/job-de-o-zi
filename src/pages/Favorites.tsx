@@ -9,13 +9,12 @@ export function Favorites() {
   return (
     <div className="px-4 pt-6 pb-6">
       <h1 className="text-xl font-bold mb-1 flex items-center gap-2">
-        <Heart className="text-terracotta fill-terracotta" size={22} />
+        <Heart size={22} className="text-terracotta fill-terracotta" />
         Favorite
       </h1>
-      <p className="text-sm text-gray-500 mb-4">
-        {favJobs.length} anunț{favJobs.length === 1 ? '' : 'uri'} salvate
+      <p className="text-sm text-earth-muted mb-4">
+        Anunțurile salvate de tine
       </p>
-
       <div className="space-y-3">
         {favJobs.map((job) => (
           <JobCard
@@ -25,9 +24,8 @@ export function Favorites() {
           />
         ))}
         {favJobs.length === 0 && (
-          <div className="text-center py-16 text-gray-400 text-sm">
-            <Heart size={40} className="mx-auto mb-3 opacity-30" />
-            Apasă pe inimă pe un anunț pentru a-l salva aici.
+          <div className="text-center py-16 text-earth-muted text-sm">
+            Niciun favorit încă. Apasă pe inimă pe un anunț.
           </div>
         )}
       </div>

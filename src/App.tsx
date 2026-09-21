@@ -24,6 +24,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/lista/:tip" element={<JobList />} />
+          <Route path="/oferte" element={<JobList />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/cont" element={<Account />} />
           <Route path="/profil/:id" element={<Profile />} />
