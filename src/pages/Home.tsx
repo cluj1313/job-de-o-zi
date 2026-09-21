@@ -8,7 +8,7 @@ export function Home() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-cream relative">
-      <div className="relative w-full aspect-[21/9] min-h-[200px] max-h-[360px] bg-tan">
+      <div className="relative w-full aspect-[16/9] min-h-[220px] max-h-[420px] bg-tan">
         <img
           src={coverJobs}
           alt="Job de o zi"
@@ -27,7 +27,7 @@ export function Home() {
         <button
           type="button"
           onClick={() => navigate('/lista/ofer')}
-          className="w-full h-12 rounded-2xl bg-terracotta text-white font-semibold text-lg flex items-center justify-center gap-3 shadow-md active:bg-terracotta-dark"
+          className="w-full h-11 rounded-2xl bg-terracotta text-white font-semibold text-base flex items-center justify-center gap-3 shadow-md active:bg-terracotta-dark"
         >
           <Briefcase size={20} />
           Ofer de lucru
@@ -35,7 +35,7 @@ export function Home() {
         <button
           type="button"
           onClick={() => navigate('/lista/caut')}
-          className="w-full h-12 rounded-2xl bg-cream text-terracotta border-2 border-terracotta font-semibold text-lg flex items-center justify-center gap-3 shadow-sm active:bg-peach/40"
+          className="w-full h-11 rounded-2xl bg-cream text-terracotta border-2 border-terracotta font-semibold text-base flex items-center justify-center gap-3 shadow-sm active:bg-peach/40"
         >
           <Search size={20} />
           Caut de lucru
