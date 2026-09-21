@@ -1,0 +1,24 @@
+name: Warm Fix Colors
+on:
+  workflow_dispatch:
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace maroon and forbidden accents
+        run: |
+          find src -type f \( -name '*.tsx' -o -name '*.css' -o -name '*.ts' \) -print0 | xargs -0 sed -i \
+            -e 's/maroon/terracotta/g' \
+            -e 's/text-red-600/text-terracotta-dark/g' \
+            -e 's/bg-red-50/bg-peach\/40/g' \
+            -e 's/bg-gray-900/bg-earth/g' \
+            -e 's/bg-black\//bg-earth\//g' \
+            -e 's/text-gray-900/text-earth/g'
+          git config user.name "cluj1313"
+          git config user.email "cluj1313@gmail.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes" || git commit -m "CI: finish warm terracotta palette (no maroon/red/black)"
+          git push
