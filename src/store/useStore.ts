@@ -7,6 +7,7 @@ import {
   seedMessages,
   seedSettings,
 } from '../data/seed';
+import { migrateHubLinks } from '../utils/hubMigrate';
 
 const KEYS = {
   users: 'jdoz_users',
@@ -37,7 +38,24 @@ const listeners = new Set<() => void>();
 
 function subscribe(cb: () => void) {
   listeners.add(cb);
-  return () => { listeners.delete(cb); };
+  return () => listeners.delete(cb);
+}
+
+function migrateSettingsInPlace() {
+  try {
+    const raw = localStorage.getItem(KEYS.settings);
+    if (!raw) return;
+    const cur = JSON.parse(raw) as AppSettings;
+    const migrated = migrateHubLinks(cur.hubLinks);
+    const before = JSON.stringify(cur.hubLinks ?? []);
+    const after = JSON.stringify(migrated);
+    if (before !== after) {
+      const next: AppSettings = { ...cur, hubLinks: migrated };
+      localStorage.setItem(KEYS.settings, JSON.stringify(next));
+    }
+  } catch {
+    /* ignore corrupt settings */
+  }
 }
 
 function ensureSeeded() {
@@ -47,9 +65,22 @@ function ensureSeeded() {
   if (!localStorage.getItem(KEYS.messages)) save(KEYS.messages, seedMessages);
   if (!localStorage.getItem(KEYS.favorites)) save(KEYS.favorites, [] as string[]);
   if (!localStorage.getItem(KEYS.settings)) save(KEYS.settings, seedSettings);
+  migrateSettingsInPlace();
 }
 
 ensureSeeded();
+
+function loadSettings(): AppSettings {
+  const cur = load<AppSettings>(KEYS.settings, seedSettings);
+  const migrated = migrateHubLinks(cur.hubLinks);
+  if (JSON.stringify(cur.hubLinks ?? []) !== JSON.stringify(migrated)) {
+    const next = { ...cur, hubLinks: migrated };
+    // persist silently without notifying mid-render
+    localStorage.setItem(KEYS.settings, JSON.stringify(next));
+    return next;
+  }
+  return { ...cur, hubLinks: migrated };
+}
 
 function getSnapshot() {
   return {
@@ -59,19 +90,23 @@ function getSnapshot() {
     messages: load<Message[]>(KEYS.messages, seedMessages),
     favorites: load<string[]>(KEYS.favorites, []),
     sessionId: load<string | null>(KEYS.session, null),
-    settings: load<AppSettings>(KEYS.settings, seedSettings),
+    settings: loadSettings(),
   };
 }
 
 let cached = getSnapshot();
 function getCachedSnapshot() {
   const next = getSnapshot();
-  if (JSON.stringify(next) !== JSON.stringify(cached)) cached = next;
+  // shallow compare keys by JSON for simplicity
+  if (JSON.stringify(next) !== JSON.stringify(cached)) {
+    cached = next;
+  }
   return cached;
 }
 
 export function useStore() {
   const state = useSyncExternalStore(subscribe, getCachedSnapshot, getCachedSnapshot);
+
   const currentUser = state.users.find((u) => u.id === state.sessionId) ?? null;
 
   const login = useCallback((phone: string, password: string): string | null => {
@@ -83,17 +118,35 @@ export function useStore() {
     return null;
   }, []);
 
-  const register = useCallback((data: { name: string; phone: string; password: string; city: string; role: Role }): string | null => {
-    const users = load<User[]>(KEYS.users, seedUsers);
-    if (users.some((u) => u.phone === data.phone)) return 'Numărul de telefon există deja';
-    const user: User = {
-      id: 'u' + Date.now(), name: data.name, phone: data.phone, password: data.password,
-      city: data.city, role: data.role, rating: 0, ratingCount: 0, description: '',
-    };
-    save(KEYS.users, [...users, user]);
-    save(KEYS.session, user.id);
-    return null;
-  }, []);
+  const register = useCallback(
+    (data: {
+      name: string;
+      phone: string;
+      password: string;
+      city: string;
+      role: Role;
+    }): string | null => {
+      const users = load<User[]>(KEYS.users, seedUsers);
+      if (users.some((u) => u.phone === data.phone)) {
+        return 'Numărul de telefon există deja';
+      }
+      const user: User = {
+        id: 'u' + Date.now(),
+        name: data.name,
+        phone: data.phone,
+        password: data.password,
+        city: data.city,
+        role: data.role,
+        rating: 0,
+        ratingCount: 0,
+        description: '',
+      };
+      save(KEYS.users, [...users, user]);
+      save(KEYS.session, user.id);
+      return null;
+    },
+    [],
+  );
 
   const logout = useCallback(() => {
     localStorage.removeItem(KEYS.session);
@@ -101,56 +154,106 @@ export function useStore() {
   }, []);
 
   const updateUser = useCallback((id: string, patch: Partial<User>) => {
-    save(KEYS.users, load<User[]>(KEYS.users, seedUsers).map((u) => (u.id === id ? { ...u, ...patch } : u)));
+    const users = load<User[]>(KEYS.users, seedUsers).map((u) =>
+      u.id === id ? { ...u, ...patch } : u,
+    );
+    save(KEYS.users, users);
   }, []);
 
   const deleteUser = useCallback((id: string) => {
-    save(KEYS.users, load<User[]>(KEYS.users, seedUsers).filter((u) => u.id !== id));
-    save(KEYS.jobs, load<Job[]>(KEYS.jobs, seedJobs).filter((j) => j.userId !== id));
+    save(
+      KEYS.users,
+      load<User[]>(KEYS.users, seedUsers).filter((u) => u.id !== id),
+    );
+    save(
+      KEYS.jobs,
+      load<Job[]>(KEYS.jobs, seedJobs).filter((j) => j.userId !== id),
+    );
   }, []);
 
   const toggleFavorite = useCallback((jobId: string) => {
     const favs = load<string[]>(KEYS.favorites, []);
-    save(KEYS.favorites, favs.includes(jobId) ? favs.filter((f) => f !== jobId) : [...favs, jobId]);
+    const next = favs.includes(jobId) ? favs.filter((f) => f !== jobId) : [...favs, jobId];
+    save(KEYS.favorites, next);
   }, []);
 
   const addJob = useCallback((job: Omit<Job, 'id' | 'createdAt'>) => {
-    const full: Job = { ...job, id: 'j' + Date.now(), createdAt: new Date().toISOString() };
+    const full: Job = {
+      ...job,
+      id: 'j' + Date.now(),
+      createdAt: new Date().toISOString(),
+    };
     save(KEYS.jobs, [full, ...load<Job[]>(KEYS.jobs, seedJobs)]);
     return full;
   }, []);
 
   const addReview = useCallback((review: Omit<Review, 'id' | 'createdAt'>) => {
-    const full: Review = { ...review, id: 'r' + Date.now(), createdAt: new Date().toISOString() };
+    const full: Review = {
+      ...review,
+      id: 'r' + Date.now(),
+      createdAt: new Date().toISOString(),
+    };
     const reviews = [full, ...load<Review[]>(KEYS.reviews, seedReviews)];
     save(KEYS.reviews, reviews);
+    // update target rating
     const targetReviews = reviews.filter((r) => r.targetUserId === review.targetUserId);
-    const avg = targetReviews.reduce((s, r) => s + r.rating, 0) / (targetReviews.length || 1);
-    updateUser(review.targetUserId, { rating: Math.round(avg * 10) / 10, ratingCount: targetReviews.length });
+    const avg =
+      targetReviews.reduce((s, r) => s + r.rating, 0) / (targetReviews.length || 1);
+    updateUser(review.targetUserId, {
+      rating: Math.round(avg * 10) / 10,
+      ratingCount: targetReviews.length,
+    });
   }, [updateUser]);
 
   const replyReview = useCallback((reviewId: string, reply: string) => {
-    save(KEYS.reviews, load<Review[]>(KEYS.reviews, seedReviews).map((r) => (r.id === reviewId ? { ...r, reply } : r)));
+    const reviews = load<Review[]>(KEYS.reviews, seedReviews).map((r) =>
+      r.id === reviewId ? { ...r, reply } : r,
+    );
+    save(KEYS.reviews, reviews);
   }, []);
 
   const deleteReview = useCallback((reviewId: string) => {
-    save(KEYS.reviews, load<Review[]>(KEYS.reviews, seedReviews).filter((r) => r.id !== reviewId));
+    save(
+      KEYS.reviews,
+      load<Review[]>(KEYS.reviews, seedReviews).filter((r) => r.id !== reviewId),
+    );
   }, []);
 
   const sendMessage = useCallback((msg: Omit<Message, 'id' | 'createdAt'>) => {
-    const full: Message = { ...msg, id: 'm' + Date.now(), createdAt: new Date().toISOString() };
+    const full: Message = {
+      ...msg,
+      id: 'm' + Date.now(),
+      createdAt: new Date().toISOString(),
+    };
     save(KEYS.messages, [full, ...load<Message[]>(KEYS.messages, seedMessages)]);
   }, []);
 
   const updateSettings = useCallback((patch: Partial<AppSettings>) => {
-    save(KEYS.settings, { ...load<AppSettings>(KEYS.settings, seedSettings), ...patch });
+    const cur = load<AppSettings>(KEYS.settings, seedSettings);
+    save(KEYS.settings, { ...cur, ...patch });
   }, []);
 
-  const getUser = useCallback((id: string) => state.users.find((u) => u.id === id), [state.users]);
+  const getUser = useCallback(
+    (id: string) => state.users.find((u) => u.id === id),
+    [state.users],
+  );
 
   return {
-    ...state, currentUser, login, register, logout, updateUser, deleteUser,
-    toggleFavorite, addJob, addReview, replyReview, deleteReview, sendMessage, updateSettings, getUser,
+    ...state,
+    currentUser,
+    login,
+    register,
+    logout,
+    updateUser,
+    deleteUser,
+    toggleFavorite,
+    addJob,
+    addReview,
+    replyReview,
+    deleteReview,
+    sendMessage,
+    updateSettings,
+    getUser,
   };
 }
 
