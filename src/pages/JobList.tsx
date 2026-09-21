@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Filter, SlidersHorizontal, Star } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { JobCard } from '../components/JobCard';
+import { CityPicker } from '../components/CityPicker';
 import { citiesMatch } from '../utils/city';
 import type { Job, User } from '../types';
 
@@ -31,15 +32,14 @@ export function JobList() {
   const [showFilters, setShowFilters] = useState(false);
   const [sort, setSort] = useState<SortKey>('distance');
 
-  const cities = useMemo(
-    () => [...new Set(jobs.filter((j) => j.type === type).map((j) => j.city))].sort(),
+  const citiesFromJobs = useMemo(
+    () => [...new Set(jobs.filter((j) => j.type === type).map((j) => j.city))],
     [jobs, type],
   );
 
   const filtered = useMemo(() => {
     let list: Job[] = jobs.filter((j) => j.type === type);
 
-    // Strict city filter (normalize: trim, case-insensitive; Cluj ≈ Cluj-Napoca)
     if (city) {
       list = list.filter((j) => citiesMatch(j.city, city));
     }
@@ -76,7 +76,6 @@ export function JobList() {
           return b.createdAt.localeCompare(a.createdAt);
         case 'distance':
         default: {
-          // Stub: city match first (selected or user's city), then by createdAt
           if (refCity) {
             const am = citiesMatch(a.city, refCity) ? 0 : 1;
             const bm = citiesMatch(b.city, refCity) ? 0 : 1;
@@ -102,42 +101,32 @@ export function JobList() {
     <div className="px-4 pt-4 pb-6">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-terracotta font-medium mb-3"
+        className="inline-flex items-center gap-1.5 text-base text-terracotta font-semibold mb-3"
       >
-        <ArrowLeft size={16} />
+        <ArrowLeft size={18} />
         Înapoi la pagina principală
       </Link>
 
       <div className="flex items-center justify-between mb-3">
-        <h1 className="text-xl font-bold text-earth">{title}</h1>
+        <h1 className="text-2xl font-bold text-earth tracking-tight">{title}</h1>
         <button
           type="button"
           onClick={() => setShowFilters((s) => !s)}
-          className="flex items-center gap-1 text-sm text-terracotta font-medium px-2 py-1 rounded-lg bg-terracotta/5"
+          className="flex items-center gap-1 text-sm text-terracotta font-semibold px-2.5 py-1.5 rounded-lg bg-terracotta/5"
         >
           <SlidersHorizontal size={16} />
           Filtre
         </button>
       </div>
 
-      {/* City selector — always visible */}
       <div className="mb-3">
-        <label className="text-xs font-medium text-gray-500">Oraș</label>
-        <select
+        <CityPicker
           value={city}
-          onChange={(e) => setCity(e.target.value)}
-          className="mt-1 w-full h-11 rounded-xl border border-gray-200 px-3 text-sm bg-white font-medium text-earth shadow-sm"
-        >
-          <option value="">Toate orașele</option>
-          {cities.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+          onChange={setCity}
+          extraCities={citiesFromJobs}
+        />
       </div>
 
-      {/* Sort tabs */}
       <div className="flex gap-1.5 overflow-x-auto pb-2 mb-2 -mx-1 px-1 scrollbar-none">
         {SORT_TABS.map((t) => (
           <button
@@ -145,15 +134,15 @@ export function JobList() {
             type="button"
             onClick={() => setSort(t.key)}
             className={[
-              'shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors',
+              'shrink-0 px-3.5 py-2 rounded-full text-sm font-semibold border transition-colors',
               sort === t.key
                 ? 'bg-terracotta text-white border-terracotta'
-                : 'bg-white text-earth-muted border-gray-200 hover:border-terracotta/40',
+                : 'bg-white text-earth-muted border-tan hover:border-terracotta/40',
             ].join(' ')}
           >
             {t.key === 'rating' ? (
               <span className="inline-flex items-center gap-1">
-                <Star size={12} className="fill-gold text-gold" />
+                <Star size={14} className="fill-gold text-gold" />
                 {t.label}
               </span>
             ) : (
@@ -164,24 +153,24 @@ export function JobList() {
       </div>
 
       {showFilters && (
-        <div className="mb-4 p-3 bg-white rounded-xl border border-gray-100 space-y-3 shadow-sm">
+        <div className="mb-4 p-3 bg-white rounded-xl border border-tan/60 space-y-3 shadow-sm">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-gray-500">Min lei/oră</label>
+              <label className="text-sm font-semibold text-earth-muted">Min lei/oră</label>
               <input
                 type="number"
                 value={minRate}
                 onChange={(e) => setMinRate(e.target.value)}
                 placeholder="0"
-                className="mt-1 w-full h-10 rounded-lg border border-gray-200 px-3 text-sm"
+                className="mt-1 w-full h-11 rounded-lg border border-tan px-3 text-base text-earth bg-white"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-500">Min rating</label>
+              <label className="text-sm font-semibold text-earth-muted">Min rating</label>
               <select
                 value={minRating}
                 onChange={(e) => setMinRating(e.target.value)}
-                className="mt-1 w-full h-10 rounded-lg border border-gray-200 px-3 text-sm bg-white"
+                className="mt-1 w-full h-11 rounded-lg border border-tan px-3 text-base bg-white text-earth"
               >
                 <option value="">Oricare</option>
                 <option value="3">3+</option>
@@ -198,15 +187,15 @@ export function JobList() {
               setMinRating('');
               setSort('distance');
             }}
-            className="text-xs text-gray-500 underline"
+            className="text-sm text-earth-muted underline font-medium"
           >
             Resetează filtrele
           </button>
         </div>
       )}
 
-      <p className="text-sm text-gray-500 mb-3 flex items-center gap-1">
-        <Filter size={14} />
+      <p className="text-base text-earth-muted mb-3 flex items-center gap-1.5 font-medium">
+        <Filter size={16} />
         {filtered.length} anunț{filtered.length === 1 ? '' : 'uri'}
         {city ? ` în ${city}` : ''}
       </p>
@@ -220,7 +209,9 @@ export function JobList() {
           />
         ))}
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-gray-500 text-sm px-2">{emptyMsg}</div>
+          <div className="text-center py-12 text-earth-muted text-base px-2 font-medium">
+            {emptyMsg}
+          </div>
         )}
       </div>
     </div>
