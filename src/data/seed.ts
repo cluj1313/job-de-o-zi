@@ -303,6 +303,7 @@ export const seedMessages: Message[] = [
 ];
 
 export const seedSettings: AppSettings = {
+  textSize: 'md',
   ownerPresentation:
     '# Job de o zi\n\nPiața românească de muncă pe zi — conectăm rapid angajatori și zilieri.\n\n## Cum funcționează\n1. Alege **Ofer de lucru** sau **Caut de lucru**\n2. Creează profilul cu telefon și oraș\n3. Publică sau aplică la anunțuri\n4. Contactează prin telefon, WhatsApp sau mesaj\n\n## Despre\nMVP demonstrativ. Contact admin: 0700000000',
   hubLinks: [
