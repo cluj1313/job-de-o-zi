@@ -44,7 +44,7 @@ export function Profile() {
     return (
       <div className="p-6 text-center">
         <p>Utilizator negăsit</p>
-        <Link to="/" className="text-maroon text-sm">
+        <Link to="/" className="text-terracotta text-sm">
           Acasă
         </Link>
       </div>
@@ -114,7 +114,7 @@ export function Profile() {
             {user.avatar ? (
               <img src={user.avatar} alt="" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-maroon bg-maroon/10">
+              <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-terracotta bg-terracotta/10">
                 {user.name.charAt(0)}
               </div>
             )}
@@ -123,14 +123,14 @@ export function Profile() {
             <button
               type="button"
               onClick={() => setShowAvatar(true)}
-              className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-maroon text-white flex items-center justify-center shadow"
+              className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-terracotta text-white flex items-center justify-center shadow"
             >
               <Camera size={14} />
             </button>
           )}
         </div>
 
-        <h1 className="mt-2 text-xl font-bold text-gray-900">{user.name}</h1>
+        <h1 className="mt-2 text-xl font-bold text-earth">{user.name}</h1>
         <p className="text-sm text-gray-500">
           {user.city} · {user.role === 'offerer' ? 'Oferă de lucru' : 'Caută de lucru'}
         </p>
@@ -139,9 +139,9 @@ export function Profile() {
         </div>
 
         {featuredJob && (
-          <div className="mt-3 p-3 bg-maroon/5 rounded-xl border border-maroon/10">
-            <p className="font-semibold text-sm text-gray-900">{featuredJob.title}</p>
-            <p className="text-maroon font-bold text-sm mt-0.5">
+          <div className="mt-3 p-3 bg-terracotta/5 rounded-xl border border-terracotta/10">
+            <p className="font-semibold text-sm text-earth">{featuredJob.title}</p>
+            <p className="text-terracotta font-bold text-sm mt-0.5">
               {featuredJob.rate} lei/oră
             </p>
           </div>
@@ -157,7 +157,7 @@ export function Profile() {
                   setDesc(user.description || '');
                   setEditingDesc(true);
                 }}
-                className="text-maroon"
+                className="text-terracotta"
               >
                 <Pencil size={14} />
               </button>
@@ -174,7 +174,7 @@ export function Profile() {
               <button
                 type="button"
                 onClick={saveDesc}
-                className="h-9 px-4 rounded-lg bg-maroon text-white text-sm font-medium"
+                className="h-9 px-4 rounded-lg bg-terracotta text-white text-sm font-medium"
               >
                 Salvează
               </button>
@@ -190,7 +190,7 @@ export function Profile() {
           <div className="mt-4 grid grid-cols-3 gap-2">
             <a
               href={tel}
-              className="h-11 rounded-xl bg-maroon text-white flex items-center justify-center gap-1.5 text-sm font-semibold"
+              className="h-11 rounded-xl bg-terracotta text-white flex items-center justify-center gap-1.5 text-sm font-semibold"
             >
               <Phone size={16} />
               Call
@@ -213,7 +213,7 @@ export function Profile() {
                 }
                 setShowMsg(true);
               }}
-              className="h-11 rounded-xl bg-white border-2 border-maroon text-maroon flex items-center justify-center gap-1.5 text-sm font-semibold"
+              className="h-11 rounded-xl bg-white border-2 border-terracotta text-terracotta flex items-center justify-center gap-1.5 text-sm font-semibold"
             >
               Mesaj
             </button>
@@ -240,7 +240,7 @@ export function Profile() {
               <button
                 type="button"
                 onClick={sendMsg}
-                className="flex-1 h-9 rounded-lg bg-maroon text-white text-sm font-medium"
+                className="flex-1 h-9 rounded-lg bg-terracotta text-white text-sm font-medium"
               >
                 Trimite
               </button>
@@ -284,7 +284,7 @@ export function Profile() {
               />
               <button
                 type="submit"
-                className="h-9 px-4 rounded-lg bg-maroon text-white text-sm font-medium"
+                className="h-9 px-4 rounded-lg bg-terracotta text-white text-sm font-medium"
               >
                 Publică
               </button>
@@ -300,8 +300,8 @@ export function Profile() {
                 </div>
                 <p className="text-sm text-gray-600 mt-1">{r.text}</p>
                 {r.reply && (
-                  <div className="mt-2 ml-3 pl-3 border-l-2 border-maroon/30 text-sm text-gray-500">
-                    <span className="font-medium text-maroon">Răspuns: </span>
+                  <div className="mt-2 ml-3 pl-3 border-l-2 border-terracotta/30 text-sm text-gray-500">
+                    <span className="font-medium text-terracotta">Răspuns: </span>
                     {r.reply}
                   </div>
                 )}
@@ -321,7 +321,7 @@ export function Profile() {
                         const t = replyDrafts[r.id]?.trim();
                         if (t) replyReview(r.id, t);
                       }}
-                      className="h-8 px-3 rounded-lg bg-maroon/10 text-maroon text-xs font-semibold"
+                      className="h-8 px-3 rounded-lg bg-terracotta/10 text-terracotta text-xs font-semibold"
                     >
                       Răspunde
                     </button>

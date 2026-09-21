@@ -20,9 +20,9 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-[60] bg-black/60 flex items-end sm:items-center justify-center p-4">
+    <div className="fixed inset-0 z-[60] bg-earth/60 flex items-end sm:items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl">
-        <h2 className="text-lg font-bold text-gray-900 mb-3">Avatar</h2>
+        <h2 className="text-lg font-bold text-earth mb-3">Avatar</h2>
         <p className="text-xs text-gray-500 mb-4">
           Fă o poză sau încarcă din galerie. (Video avatar — TODO)
         </p>
@@ -32,7 +32,7 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
             <img
               src={preview}
               alt="Preview"
-              className="w-40 h-40 rounded-full object-cover border-4 border-maroon"
+              className="w-40 h-40 rounded-full object-cover border-4 border-terracotta"
             />
             <div className="flex gap-2 w-full">
               <button
@@ -46,7 +46,7 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
               <button
                 type="button"
                 onClick={() => onSave(preview)}
-                className="flex-1 h-11 rounded-xl bg-maroon text-white flex items-center justify-center gap-2 text-sm font-medium"
+                className="flex-1 h-11 rounded-xl bg-terracotta text-white flex items-center justify-center gap-2 text-sm font-medium"
               >
                 <Check size={16} />
                 Salvează
@@ -58,7 +58,7 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
             <button
               type="button"
               onClick={() => cameraRef.current?.click()}
-              className="h-28 rounded-xl border-2 border-dashed border-maroon/40 flex flex-col items-center justify-center gap-2 text-maroon"
+              className="h-28 rounded-xl border-2 border-dashed border-terracotta/40 flex flex-col items-center justify-center gap-2 text-terracotta"
             >
               <Camera size={28} />
               <span className="text-sm font-medium">Cameră</span>

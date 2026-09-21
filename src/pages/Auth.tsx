@@ -43,7 +43,7 @@ export function Auth() {
 
   return (
     <div className="px-4 pt-8 pb-6 max-w-sm mx-auto">
-      <h1 className="text-2xl font-bold text-center text-maroon mb-1">
+      <h1 className="text-2xl font-bold text-center text-terracotta mb-1">
         Job de o zi
       </h1>
       <p className="text-center text-sm text-gray-500 mb-6">
@@ -54,7 +54,7 @@ export function Auth() {
         <button
           type="button"
           className={`flex-1 py-2 rounded-lg text-sm font-semibold ${
-            mode === 'login' ? 'bg-white shadow text-maroon' : 'text-gray-500'
+            mode === 'login' ? 'bg-white shadow text-terracotta' : 'text-gray-500'
           }`}
           onClick={() => setMode('login')}
         >
@@ -63,7 +63,7 @@ export function Auth() {
         <button
           type="button"
           className={`flex-1 py-2 rounded-lg text-sm font-semibold ${
-            mode === 'register' ? 'bg-white shadow text-maroon' : 'text-gray-500'
+            mode === 'register' ? 'bg-white shadow text-terracotta' : 'text-gray-500'
           }`}
           onClick={() => setMode('register')}
         >
@@ -105,12 +105,12 @@ export function Auth() {
         />
 
         {error && (
-          <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
+          <p className="text-sm text-terracotta-dark bg-peach/40 rounded-lg px-3 py-2">{error}</p>
         )}
 
         <button
           type="submit"
-          className="w-full h-12 rounded-xl bg-maroon text-white font-semibold mt-2 active:bg-maroon-dark"
+          className="w-full h-12 rounded-xl bg-terracotta text-white font-semibold mt-2 active:bg-terracotta-dark"
         >
           {mode === 'login' ? 'Intră în cont' : 'Creează cont'}
         </button>
@@ -144,7 +144,7 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="mt-1 w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-maroon/30"
+        className="mt-1 w-full h-11 rounded-xl border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta/30"
       />
     </div>
   );
@@ -165,7 +165,7 @@ function RoleBtn({
       onClick={onClick}
       className={`h-10 rounded-lg text-sm font-medium border ${
         active
-          ? 'bg-maroon text-white border-maroon'
+          ? 'bg-terracotta text-white border-terracotta'
           : 'bg-white text-gray-600 border-gray-200'
       }`}
     >

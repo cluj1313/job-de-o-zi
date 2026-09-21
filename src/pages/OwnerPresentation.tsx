@@ -20,7 +20,7 @@ export function OwnerPresentation() {
       <div className="flex items-center justify-between mb-4">
         <Link
           to="/setari"
-          className="inline-flex items-center gap-1.5 text-sm text-maroon font-medium"
+          className="inline-flex items-center gap-1.5 text-sm text-terracotta font-medium"
         >
           <ArrowLeft size={16} />
           Înapoi
@@ -32,7 +32,7 @@ export function OwnerPresentation() {
               setDraft(settings.ownerPresentation);
               setEditing(true);
             }}
-            className="flex items-center gap-1 text-sm text-maroon font-medium"
+            className="flex items-center gap-1 text-sm text-terracotta font-medium"
           >
             <Pencil size={14} />
             Editează
@@ -59,7 +59,7 @@ export function OwnerPresentation() {
             <button
               type="button"
               onClick={save}
-              className="flex-1 h-11 rounded-xl bg-maroon text-white text-sm font-semibold"
+              className="flex-1 h-11 rounded-xl bg-terracotta text-white text-sm font-semibold"
             >
               Salvează
             </button>
@@ -70,7 +70,7 @@ export function OwnerPresentation() {
           {lines.map((line, i) => {
             if (line.startsWith('# '))
               return (
-                <h1 key={i} className="text-2xl font-bold text-maroon">
+                <h1 key={i} className="text-2xl font-bold text-terracotta">
                   {line.slice(2)}
                 </h1>
               );

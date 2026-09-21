@@ -49,7 +49,7 @@ export function Admin() {
 
   return (
     <div className="px-4 pt-4 pb-8 space-y-6">
-      <Link to="/cont" className="inline-flex items-center gap-1.5 text-sm text-maroon font-medium">
+      <Link to="/cont" className="inline-flex items-center gap-1.5 text-sm text-terracotta font-medium">
         <ArrowLeft size={16} /> Înapoi
       </Link>
       <h1 className="text-xl font-bold">Panou Admin</h1>
@@ -62,7 +62,7 @@ export function Admin() {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">
                   {u.name}{' '}
-                  {u.isAdmin && <span className="text-[10px] bg-maroon text-white px-1.5 py-0.5 rounded">admin</span>}
+                  {u.isAdmin && <span className="text-[10px] bg-terracotta text-white px-1.5 py-0.5 rounded">admin</span>}
                   {u.blocked && <span className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded ml-1">blocat</span>}
                 </p>
                 <p className="text-xs text-gray-500">{u.phone} · {u.city}</p>
@@ -74,7 +74,7 @@ export function Admin() {
                     <Ban size={16} />
                   </button>
                   <button type="button" title="Șterge" onClick={() => { if (confirm(`Ștergi pe ${u.name}?`)) deleteUser(u.id); }}
-                    className="w-9 h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
+                    className="w-9 h-9 rounded-lg bg-peach/40 text-terracotta-dark flex items-center justify-center">
                     <Trash2 size={16} />
                   </button>
                 </>
@@ -91,7 +91,7 @@ export function Admin() {
         <textarea value={broadcast} onChange={(e) => setBroadcast(e.target.value)} rows={2}
           placeholder="Mesaj pentru toți..." className="w-full rounded-xl border border-gray-200 p-3 text-sm" />
         <button type="button" onClick={doBroadcast}
-          className="mt-2 h-10 px-4 rounded-xl bg-maroon text-white text-sm font-semibold">
+          className="mt-2 h-10 px-4 rounded-xl bg-terracotta text-white text-sm font-semibold">
           Trimite broadcast
         </button>
       </section>
@@ -108,7 +108,7 @@ export function Admin() {
         <textarea value={msgText} onChange={(e) => setMsgText(e.target.value)} rows={2}
           className="w-full rounded-xl border border-gray-200 p-3 text-sm" placeholder="Mesaj..." />
         <button type="button" onClick={doMsg}
-          className="mt-2 h-10 px-4 rounded-xl bg-gray-900 text-white text-sm font-semibold">
+          className="mt-2 h-10 px-4 rounded-xl bg-earth text-white text-sm font-semibold">
           Trimite
         </button>
       </section>
@@ -129,9 +129,9 @@ export function Admin() {
             </div>
           ))}
           <button type="button" onClick={() => setLinks([...links,{id:'h'+Date.now(),title:'Link nou',url:'https://',description:''}])}
-            className="text-sm text-maroon font-medium">+ Adaugă link</button>
+            className="text-sm text-terracotta font-medium">+ Adaugă link</button>
           <button type="button" onClick={saveLinks}
-            className="block w-full h-10 rounded-xl bg-maroon text-white text-sm font-semibold">Salvează link-uri</button>
+            className="block w-full h-10 rounded-xl bg-terracotta text-white text-sm font-semibold">Salvează link-uri</button>
         </div>
       </section>
 
@@ -147,7 +147,7 @@ export function Admin() {
                 <p className="text-sm truncate">{r.text}</p>
               </div>
               <button type="button" onClick={() => { if (confirm('Ștergi recenzia?')) deleteReview(r.id); }}
-                className="w-9 h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                className="w-9 h-9 rounded-lg bg-peach/40 text-terracotta-dark flex items-center justify-center shrink-0">
                 <Trash2 size={14} />
               </button>
             </div>
