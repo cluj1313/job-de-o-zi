@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-maroon: #7a1f2b;
-  --color-maroon-dark: #5c1620;
-  --color-maroon-light: #9a2f3d;
-  --color-cream: #faf7f5;
-  --color-gold: #c9a227;
+  /* Warm collage palette — no bordo / cool-dark reds / pure black */
+  --color-terracotta: #c46a3a;
+  --color-terracotta-dark: #a8552f;
+  --color-terracotta-light: #d4845a;
+  --color-ochre: #c9922a;
+  --color-gold: #d4a017;
+  --color-peach: #f3d5b5;
+  --color-tan: #e6d3b3;
+  --color-cream: #faf6f0;
+  --color-earth: #3d2b1f;
+  --color-earth-muted: #6b5344;
 }
 
 * {
@@ -16,6 +22,7 @@ html, body, #root {
   height: 100%;
   margin: 0;
   background: var(--color-cream);
+  color: var(--color-earth);
 }
 
 body {

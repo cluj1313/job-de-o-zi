@@ -7,41 +7,40 @@ export function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col">
-      <div className="relative h-[48vh] min-h-[260px] max-h-[420px]">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-cream">
+      <div className="relative w-full aspect-[21/9] min-h-[200px] max-h-[360px] bg-tan">
         <img
           src={coverJobs}
           alt="Job de o zi"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <ShareButton />
-        <div className="absolute bottom-6 left-0 right-0 px-5 text-white">
-          <h1 className="text-3xl font-bold tracking-tight drop-shadow">Job de o zi</h1>
-          <p className="mt-1 text-sm text-white/90">
-            Piața de muncă pe zi din România
-          </p>
-        </div>
       </div>
 
-      <div className="flex-1 px-4 pt-5 pb-4 space-y-3">
+      <div className="flex-1 px-4 pt-4 pb-4 space-y-2.5">
+        <h1 className="text-2xl font-bold tracking-tight text-earth text-center">
+          Job de o zi
+        </h1>
+        <p className="text-center text-sm text-earth-muted -mt-1 mb-1">
+          Piața de muncă pe zi din România
+        </p>
         <button
           type="button"
           onClick={() => navigate('/lista/ofer')}
-          className="w-full h-14 rounded-2xl bg-maroon text-white font-semibold text-lg flex items-center justify-center gap-3 shadow-md active:bg-maroon-dark"
+          className="w-full h-12 rounded-2xl bg-terracotta text-white font-semibold text-lg flex items-center justify-center gap-3 shadow-md active:bg-terracotta-dark"
         >
-          <Briefcase size={22} />
+          <Briefcase size={20} />
           Ofer de lucru
         </button>
         <button
           type="button"
           onClick={() => navigate('/lista/caut')}
-          className="w-full h-14 rounded-2xl bg-white text-maroon border-2 border-maroon font-semibold text-lg flex items-center justify-center gap-3 shadow-sm active:bg-maroon/5"
+          className="w-full h-12 rounded-2xl bg-cream text-terracotta border-2 border-terracotta font-semibold text-lg flex items-center justify-center gap-3 shadow-sm active:bg-peach/40"
         >
-          <Search size={22} />
+          <Search size={20} />
           Caut de lucru
         </button>
-        <p className="text-center text-xs text-gray-500 pt-2">
+        <p className="text-center text-xs text-earth-muted pt-2">
           Anunțuri pe zi · Contact rapid · Fără comision în MVP
         </p>
       </div>
