@@ -27,7 +27,7 @@ export function Messages() {
         <button
           type="button"
           onClick={() => navigate('/auth')}
-          className="h-11 px-6 rounded-xl bg-maroon text-white font-semibold text-sm"
+          className="h-11 px-6 rounded-xl bg-terracotta text-white font-semibold text-sm"
         >
           Login
         </button>
@@ -75,7 +75,7 @@ export function Messages() {
                 m.broadcast
                   ? 'bg-amber-50 border-amber-100'
                   : m.fromId === currentUser.id
-                    ? 'bg-maroon/5 border-maroon/10 ml-6'
+                    ? 'bg-terracotta/5 border-terracotta/10 ml-6'
                     : 'bg-white border-gray-100 mr-6'
               }`}
             >
@@ -103,7 +103,7 @@ export function Messages() {
                 <button
                   type="button"
                   onClick={() => setReplyTo(m.fromId)}
-                  className="mt-2 text-xs text-maroon font-semibold"
+                  className="mt-2 text-xs text-terracotta font-semibold"
                 >
                   Răspunde {other?.name || ''}
                 </button>
@@ -128,7 +128,7 @@ export function Messages() {
             <button
               type="button"
               onClick={send}
-              className="w-10 h-10 rounded-xl bg-maroon text-white flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-terracotta text-white flex items-center justify-center"
             >
               <Send size={16} />
             </button>
