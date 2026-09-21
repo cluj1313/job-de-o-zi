@@ -10,6 +10,7 @@ import {
   Bot,
   LayoutGrid,
   ExternalLink,
+  ChevronRight,
   X,
   ChevronUp,
   ChevronDown,
@@ -107,6 +108,8 @@ export function Settings() {
   const navigate = useNavigate();
   const [appsOpen, setAppsOpen] = useState(true);
 
+  // Prefer admin-edited hubLinks; enrich with Ciubi thumbs/colors when titles match
+  // Migration already strips GitHub source cards in the store.
   const hub =
     settings.hubLinks && settings.hubLinks.length > 0
       ? settings.hubLinks.map((h) => {
@@ -118,7 +121,7 @@ export function Settings() {
             title: h.title,
             url: h.url,
             description: h.description || seed?.description || '',
-            thumb: seed?.thumb || '',
+            thumb: h.photo || seed?.thumb || '',
             color: seed?.color || '#c46a3a',
           };
         })
@@ -242,7 +245,7 @@ export function Settings() {
                     {app.description || app.url}
                   </p>
                 </div>
-                <ExternalLink size={16} className="text-earth-muted shrink-0" />
+                <ChevronRight size={18} className="text-earth-muted shrink-0" />
               </a>
             ))}
           </div>
