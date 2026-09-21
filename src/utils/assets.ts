@@ -1,9 +1,9 @@
-import { coverJobs } from './coverJobs';
-import { coverWatch } from './coverWatch';
+const base = import.meta.env.BASE_URL;
 
-export { coverJobs, coverWatch };
+export const coverJobs = `${base}assets/cover-jobs.svg`;
+export const coverWatch = `${base}assets/cover-watch.svg`;
 
-/** Resolve known cover paths / legacy refs to embedded covers. */
+/** Resolve known cover paths / legacy refs to covers. */
 export function resolveAsset(src?: string): string {
   if (!src) return coverJobs;
   if (src.startsWith('data:')) return src;
