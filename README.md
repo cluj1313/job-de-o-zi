@@ -29,8 +29,8 @@ npm run preview
 
 ## Cont admin demo
 
-| Câmp    | Valoare     |
-|---------|-------------|
+| Câmp    | Valoare      |
+|---------|--------------|
 | Telefon | `0700000000` |
 | Parolă  | `admin123`   |
 
