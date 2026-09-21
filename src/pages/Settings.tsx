@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useStore, resetDemoData } from '../store/useStore';
 import { CIUBI_APPS } from '../data/ciubiApps';
+import { TextSizeControl } from '../components/TextSizeControl';
 
 type RowProps = {
   to?: string;
@@ -108,8 +109,6 @@ export function Settings() {
   const navigate = useNavigate();
   const [appsOpen, setAppsOpen] = useState(true);
 
-  // Prefer admin-edited hubLinks; enrich with Ciubi thumbs/colors when titles match
-  // Migration already strips GitHub source cards in the store.
   const hub =
     settings.hubLinks && settings.hubLinks.length > 0
       ? settings.hubLinks.map((h) => {
@@ -163,6 +162,7 @@ export function Settings() {
 
       <SectionLabel>Aplicația</SectionLabel>
       <div className="px-2 space-y-0.5">
+        <TextSizeControl />
         <MenuRow
           onClick={() => void shareApp()}
           icon={<Share2 size={18} />}
