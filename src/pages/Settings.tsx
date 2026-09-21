@@ -15,7 +15,7 @@ export function Settings() {
           className="block p-4 bg-white rounded-2xl border border-gray-100 shadow-sm"
         >
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-maroon/10 flex items-center justify-center text-maroon">
+            <div className="w-10 h-10 rounded-xl bg-terracotta/10 flex items-center justify-center text-terracotta">
               <FileText size={20} />
             </div>
             <div>
@@ -36,7 +36,7 @@ export function Settings() {
             className="block p-4 bg-white rounded-2xl border border-gray-100 shadow-sm"
           >
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-maroon/10 flex items-center justify-center text-maroon">
+              <div className="w-10 h-10 rounded-xl bg-terracotta/10 flex items-center justify-center text-terracotta">
                 <ExternalLink size={20} />
               </div>
               <div className="flex-1 min-w-0">
@@ -44,7 +44,7 @@ export function Settings() {
                 {link.description && (
                   <p className="text-xs text-gray-500 mt-0.5">{link.description}</p>
                 )}
-                <p className="text-[10px] text-maroon mt-1 truncate">{link.url}</p>
+                <p className="text-[10px] text-terracotta mt-1 truncate">{link.url}</p>
               </div>
             </div>
           </a>
@@ -53,7 +53,7 @@ export function Settings() {
         {currentUser?.isAdmin && (
           <Link
             to="/admin"
-            className="block p-4 bg-gray-900 text-white rounded-2xl shadow-sm text-sm font-semibold text-center"
+            className="block p-4 bg-earth text-white rounded-2xl shadow-sm text-sm font-semibold text-center"
           >
             Deschide panoul Admin
           </Link>
