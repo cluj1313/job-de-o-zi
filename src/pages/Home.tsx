@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, Search } from 'lucide-react';
+import { Briefcase, Search, Bot } from 'lucide-react';
 import { ShareButton } from '../components/ShareButton';
 import { coverJobs } from '../utils/assets';
 
@@ -7,7 +7,7 @@ export function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-cream">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-cream relative">
       <div className="relative w-full aspect-[21/9] min-h-[200px] max-h-[360px] bg-tan">
         <img
           src={coverJobs}
@@ -44,6 +44,17 @@ export function Home() {
           Anunțuri pe zi · Contact rapid · Fără comision în MVP
         </p>
       </div>
+
+      {/* Floating chatbot entry */}
+      <button
+        type="button"
+        onClick={() => navigate('/ajutor')}
+        className="fixed bottom-24 right-4 z-40 w-14 h-14 rounded-full bg-terracotta text-white shadow-lg flex items-center justify-center active:bg-terracotta-dark border-4 border-cream"
+        aria-label="Ajutor chatbot"
+        title="Ajutor"
+      >
+        <Bot size={24} />
+      </button>
     </div>
   );
 }
