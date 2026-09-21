@@ -32,7 +32,7 @@ export function ShareButton() {
     <button
       type="button"
       onClick={share}
-      className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center text-maroon"
+      className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center text-terracotta"
       aria-label="Distribuie"
     >
       {copied ? (

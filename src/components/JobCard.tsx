@@ -37,15 +37,15 @@ export function JobCard({ job, user }: Props) {
         >
           <Heart
             size={18}
-            className={liked ? 'fill-maroon text-maroon' : 'text-gray-500'}
+            className={liked ? 'fill-terracotta text-terracotta' : 'text-gray-500'}
           />
         </button>
-        <span className="absolute bottom-2 left-2 bg-maroon text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+        <span className="absolute bottom-2 left-2 bg-terracotta text-white text-xs font-semibold px-2.5 py-1 rounded-full">
           {job.rate} lei/oră
         </span>
       </div>
       <div className="p-3">
-        <h3 className="font-semibold text-gray-900 text-[15px] leading-snug line-clamp-2">
+        <h3 className="font-semibold text-earth text-[15px] leading-snug line-clamp-2">
           {job.title}
         </h3>
         <div className="mt-1.5 flex items-center gap-1 text-sm text-gray-500">

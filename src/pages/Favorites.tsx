@@ -9,7 +9,7 @@ export function Favorites() {
   return (
     <div className="px-4 pt-6 pb-6">
       <h1 className="text-xl font-bold mb-1 flex items-center gap-2">
-        <Heart className="text-maroon fill-maroon" size={22} />
+        <Heart className="text-terracotta fill-terracotta" size={22} />
         Favorite
       </h1>
       <p className="text-sm text-gray-500 mb-4">
