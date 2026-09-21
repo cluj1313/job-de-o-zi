@@ -38,18 +38,18 @@ export function JobList() {
     <div className="px-4 pt-4 pb-6">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-maroon font-medium mb-3"
+        className="inline-flex items-center gap-1.5 text-sm text-terracotta font-medium mb-3"
       >
         <ArrowLeft size={16} />
         Înapoi la pagina principală
       </Link>
 
       <div className="flex items-center justify-between mb-3">
-        <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+        <h1 className="text-xl font-bold text-earth">{title}</h1>
         <button
           type="button"
           onClick={() => setShowFilters((s) => !s)}
-          className="flex items-center gap-1 text-sm text-maroon font-medium px-2 py-1 rounded-lg bg-maroon/5"
+          className="flex items-center gap-1 text-sm text-terracotta font-medium px-2 py-1 rounded-lg bg-terracotta/5"
         >
           <SlidersHorizontal size={16} />
           Filtre

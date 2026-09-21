@@ -10,8 +10,8 @@ export function Account() {
   if (!currentUser) {
     return (
       <div className="px-4 pt-16 pb-8 text-center">
-        <div className="w-16 h-16 rounded-full bg-maroon/10 flex items-center justify-center mx-auto mb-4">
-          <UserIcon className="text-maroon" size={28} />
+        <div className="w-16 h-16 rounded-full bg-terracotta/10 flex items-center justify-center mx-auto mb-4">
+          <UserIcon className="text-terracotta" size={28} />
         </div>
         <h1 className="text-xl font-bold mb-2">Contul tău</h1>
         <p className="text-sm text-gray-500 mb-6">
@@ -19,7 +19,7 @@ export function Account() {
         </p>
         <Link
           to="/auth"
-          className="inline-flex h-12 px-8 rounded-xl bg-maroon text-white font-semibold items-center"
+          className="inline-flex h-12 px-8 rounded-xl bg-terracotta text-white font-semibold items-center"
         >
           Login / Înregistrare
         </Link>
@@ -32,11 +32,11 @@ export function Account() {
   return (
     <div className="px-4 pt-6 pb-6">
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-16 h-16 rounded-full bg-maroon/10 overflow-hidden border-2 border-maroon/20">
+        <div className="w-16 h-16 rounded-full bg-terracotta/10 overflow-hidden border-2 border-terracotta/20">
           {currentUser.avatar ? (
             <img src={currentUser.avatar} alt="" className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-xl font-bold text-maroon">
+            <div className="w-full h-full flex items-center justify-center text-xl font-bold text-terracotta">
               {currentUser.name.charAt(0)}
             </div>
           )}
@@ -55,14 +55,14 @@ export function Account() {
           to={`/profil/${currentUser.id}`}
           className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 shadow-sm"
         >
-          <UserIcon size={20} className="text-maroon" />
+          <UserIcon size={20} className="text-terracotta" />
           <span className="font-medium text-sm">Vezi / editează profilul</span>
         </Link>
 
         {currentUser.role === 'offerer' && (
           <Link
             to="/creeaza"
-            className="flex items-center gap-3 p-4 bg-maroon text-white rounded-xl shadow-sm"
+            className="flex items-center gap-3 p-4 bg-terracotta text-white rounded-xl shadow-sm"
           >
             <PlusCircle size={20} />
             <span className="font-medium text-sm">Creează ofertă de lucru</span>
@@ -72,7 +72,7 @@ export function Account() {
         {currentUser.isAdmin && (
           <Link
             to="/admin"
-            className="flex items-center gap-3 p-4 bg-gray-900 text-white rounded-xl shadow-sm"
+            className="flex items-center gap-3 p-4 bg-earth text-white rounded-xl shadow-sm"
           >
             <Shield size={20} />
             <span className="font-medium text-sm">Panou Admin</span>
@@ -85,7 +85,7 @@ export function Account() {
             logout();
             navigate('/');
           }}
-          className="w-full flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 text-red-600"
+          className="w-full flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 text-terracotta-dark"
         >
           <LogOut size={20} />
           <span className="font-medium text-sm">Deconectare</span>

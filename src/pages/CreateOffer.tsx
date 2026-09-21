@@ -18,7 +18,7 @@ export function CreateOffer() {
     return (
       <div className="p-6 text-center">
         <p className="mb-3">Trebuie să fii autentificat.</p>
-        <Link to="/auth" className="text-maroon font-medium">
+        <Link to="/auth" className="text-terracotta font-medium">
           Login
         </Link>
       </div>
@@ -55,7 +55,7 @@ export function CreateOffer() {
     <div className="px-4 pt-4 pb-6">
       <Link
         to="/cont"
-        className="inline-flex items-center gap-1.5 text-sm text-maroon font-medium mb-3"
+        className="inline-flex items-center gap-1.5 text-sm text-terracotta font-medium mb-3"
       >
         <ArrowLeft size={16} />
         Înapoi
@@ -85,11 +85,20 @@ export function CreateOffer() {
           />
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <Field label="Lei / oră" value={rate} onChange={setRate} placeholder="100" type="number" />
+          <Field
+            label="Lei / oră"
+            value={rate}
+            onChange={setRate}
+            placeholder="100"
+            type="number"
+          />
           <Field label="Oraș" value={city} onChange={setCity} placeholder="Cluj-Napoca" />
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" className="w-full h-12 rounded-xl bg-maroon text-white font-semibold">
+        {error && <p className="text-sm text-terracotta-dark">{error}</p>}
+        <button
+          type="submit"
+          className="w-full h-12 rounded-xl bg-terracotta text-white font-semibold"
+        >
           Publică anunțul
         </button>
       </form>
@@ -98,15 +107,28 @@ export function CreateOffer() {
 }
 
 function Field({
-  label, value, onChange, placeholder, type = 'text',
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = 'text',
 }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  type?: string;
 }) {
   return (
     <div>
       <label className="text-xs font-medium text-gray-500">{label}</label>
-      <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
-        className="mt-1 w-full h-11 rounded-xl border border-gray-200 px-3 text-sm" />
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="mt-1 w-full h-11 rounded-xl border border-gray-200 px-3 text-sm"
+      />
     </div>
   );
 }
