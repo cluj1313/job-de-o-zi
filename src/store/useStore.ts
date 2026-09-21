@@ -66,9 +66,7 @@ function getSnapshot() {
 let cached = getSnapshot();
 function getCachedSnapshot() {
   const next = getSnapshot();
-  if (JSON.stringify(next) !== JSON.stringify(cached)) {
-    cached = next;
-  }
+  if (JSON.stringify(next) !== JSON.stringify(cached)) cached = next;
   return cached;
 }
 
@@ -85,27 +83,17 @@ export function useStore() {
     return null;
   }, []);
 
-  const register = useCallback(
-    (data: { name: string; phone: string; password: string; city: string; role: Role; }): string | null => {
-      const users = load<User[]>(KEYS.users, seedUsers);
-      if (users.some((u) => u.phone === data.phone)) return 'Numărul de telefon există deja';
-      const user: User = {
-        id: 'u' + Date.now(),
-        name: data.name,
-        phone: data.phone,
-        password: data.password,
-        city: data.city,
-        role: data.role,
-        rating: 0,
-        ratingCount: 0,
-        description: '',
-      };
-      save(KEYS.users, [...users, user]);
-      save(KEYS.session, user.id);
-      return null;
-    },
-    [],
-  );
+  const register = useCallback((data: { name: string; phone: string; password: string; city: string; role: Role }): string | null => {
+    const users = load<User[]>(KEYS.users, seedUsers);
+    if (users.some((u) => u.phone === data.phone)) return 'Numărul de telefon există deja';
+    const user: User = {
+      id: 'u' + Date.now(), name: data.name, phone: data.phone, password: data.password,
+      city: data.city, role: data.role, rating: 0, ratingCount: 0, description: '',
+    };
+    save(KEYS.users, [...users, user]);
+    save(KEYS.session, user.id);
+    return null;
+  }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem(KEYS.session);
@@ -113,10 +101,7 @@ export function useStore() {
   }, []);
 
   const updateUser = useCallback((id: string, patch: Partial<User>) => {
-    const users = load<User[]>(KEYS.users, seedUsers).map((u) =>
-      u.id === id ? { ...u, ...patch } : u,
-    );
-    save(KEYS.users, users);
+    save(KEYS.users, load<User[]>(KEYS.users, seedUsers).map((u) => (u.id === id ? { ...u, ...patch } : u)));
   }, []);
 
   const deleteUser = useCallback((id: string) => {
@@ -126,8 +111,7 @@ export function useStore() {
 
   const toggleFavorite = useCallback((jobId: string) => {
     const favs = load<string[]>(KEYS.favorites, []);
-    const next = favs.includes(jobId) ? favs.filter((f) => f !== jobId) : [...favs, jobId];
-    save(KEYS.favorites, next);
+    save(KEYS.favorites, favs.includes(jobId) ? favs.filter((f) => f !== jobId) : [...favs, jobId]);
   }, []);
 
   const addJob = useCallback((job: Omit<Job, 'id' | 'createdAt'>) => {
@@ -142,17 +126,11 @@ export function useStore() {
     save(KEYS.reviews, reviews);
     const targetReviews = reviews.filter((r) => r.targetUserId === review.targetUserId);
     const avg = targetReviews.reduce((s, r) => s + r.rating, 0) / (targetReviews.length || 1);
-    updateUser(review.targetUserId, {
-      rating: Math.round(avg * 10) / 10,
-      ratingCount: targetReviews.length,
-    });
+    updateUser(review.targetUserId, { rating: Math.round(avg * 10) / 10, ratingCount: targetReviews.length });
   }, [updateUser]);
 
   const replyReview = useCallback((reviewId: string, reply: string) => {
-    const reviews = load<Review[]>(KEYS.reviews, seedReviews).map((r) =>
-      r.id === reviewId ? { ...r, reply } : r,
-    );
-    save(KEYS.reviews, reviews);
+    save(KEYS.reviews, load<Review[]>(KEYS.reviews, seedReviews).map((r) => (r.id === reviewId ? { ...r, reply } : r)));
   }, []);
 
   const deleteReview = useCallback((reviewId: string) => {
@@ -165,28 +143,14 @@ export function useStore() {
   }, []);
 
   const updateSettings = useCallback((patch: Partial<AppSettings>) => {
-    const cur = load<AppSettings>(KEYS.settings, seedSettings);
-    save(KEYS.settings, { ...cur, ...patch });
+    save(KEYS.settings, { ...load<AppSettings>(KEYS.settings, seedSettings), ...patch });
   }, []);
 
   const getUser = useCallback((id: string) => state.users.find((u) => u.id === id), [state.users]);
 
   return {
-    ...state,
-    currentUser,
-    login,
-    register,
-    logout,
-    updateUser,
-    deleteUser,
-    toggleFavorite,
-    addJob,
-    addReview,
-    replyReview,
-    deleteReview,
-    sendMessage,
-    updateSettings,
-    getUser,
+    ...state, currentUser, login, register, logout, updateUser, deleteUser,
+    toggleFavorite, addJob, addReview, replyReview, deleteReview, sendMessage, updateSettings, getUser,
   };
 }
 
