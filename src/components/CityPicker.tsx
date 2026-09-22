@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronDown, MapPin, Search, X } from 'lucide-react';
-import { ALL_CITIES } from '../utils/city';
+import { ALL_CITIES, stripDiacritics } from '../utils/city';
 
 type Props = {
   value: string;
@@ -26,9 +26,9 @@ export function CityPicker({
   }, [extraCities]);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = stripDiacritics(query.trim().toLowerCase());
     if (!q) return cities;
-    return cities.filter((c) => c.toLowerCase().includes(q));
+    return cities.filter((c) => stripDiacritics(c.toLowerCase()).includes(q));
   }, [cities, query]);
 
   useEffect(() => {
