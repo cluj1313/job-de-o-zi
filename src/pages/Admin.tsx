@@ -1,23 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, Ban, Trash2, Megaphone, Link2 } from 'lucide-react';
+import { ArrowLeft, Megaphone } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import type { HubLink } from '../types';
+import { AdminThreads } from '../components/AdminThreads';
+import { AdminUsers } from '../components/AdminUsers';
+import { AdminHub } from '../components/AdminHub';
+import { AdminReviews } from '../components/AdminReviews';
 
 type MsgMode = 'one' | 'all';
 
 export function Admin() {
-  const {
-    currentUser, users, reviews, updateUser, deleteUser, deleteReview,
-    sendMessage, settings, updateSettings,
-  } = useStore();
-
+  const { currentUser, users, sendMessage } = useStore();
   const [msgMode, setMsgMode] = useState<MsgMode>('one');
   const [msgUserId, setMsgUserId] = useState('');
   const [userQuery, setUserQuery] = useState('');
   const [msgText, setMsgText] = useState('');
   const [toast, setToast] = useState<string | null>(null);
-  const [links, setLinks] = useState<HubLink[]>(settings.hubLinks);
 
   useEffect(() => {
     if (!toast) return;
@@ -48,8 +46,7 @@ export function Admin() {
   function send() {
     const text = msgText.trim();
     if (!text) return;
-
-    // Tuturor = all users of THIS app (Job de o zi) only — not cross-app
+    // Tuturor = Job de o zi users only — not cross-app
     if (msgMode === 'all') {
       sendMessage({
         fromId: admin.id,
@@ -62,7 +59,6 @@ export function Admin() {
       setToast('Trimis tuturor.');
       return;
     }
-
     if (!msgUserId) {
       setToast('Alege un user.');
       return;
@@ -77,11 +73,6 @@ export function Admin() {
     setToast('Mesaj trimis.');
   }
 
-  function saveLinks() {
-    updateSettings({ hubLinks: links });
-    setToast('Link-uri hub salvate');
-  }
-
   const selected = recipients.find((u) => u.id === msgUserId);
 
   return (
@@ -91,36 +82,7 @@ export function Admin() {
       </Link>
       <h1 className="text-xl font-bold">Panou Admin</h1>
 
-      <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-2">Utilizatori ({users.length})</h2>
-        <div className="space-y-2">
-          {users.map((u) => (
-            <div key={u.id} className="p-3 bg-white rounded-xl border border-gray-100 flex items-center gap-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">
-                  {u.name}{' '}
-                  {u.isAdmin && <span className="text-[10px] bg-terracotta text-white px-1.5 py-0.5 rounded">admin</span>}
-                  {u.blocked && <span className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded ml-1">blocat</span>}
-                </p>
-                <p className="text-xs text-gray-500">{u.phone} · {u.city}</p>
-                {u.email && <p className="text-[11px] text-earth-muted truncate">{u.email}</p>}
-              </div>
-              {!u.isAdmin && (
-                <>
-                  <button type="button" title="Blochează" onClick={() => updateUser(u.id, { blocked: !u.blocked })}
-                    className="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
-                    <Ban size={16} />
-                  </button>
-                  <button type="button" title="Șterge" onClick={() => { if (confirm(`Ștergi pe ${u.name}?`)) deleteUser(u.id); }}
-                    className="w-9 h-9 rounded-lg bg-peach/40 text-terracotta-dark flex items-center justify-center">
-                    <Trash2 size={16} />
-                  </button>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+      <AdminUsers />
 
       <section>
         <h2 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
@@ -129,7 +91,6 @@ export function Admin() {
         <p className="text-[11px] text-earth-muted mb-2">
           Mesaje doar pentru utilizatorii din Job de o zi.
         </p>
-
         <div className="grid grid-cols-2 gap-2 mb-3">
           <button
             type="button"
@@ -154,14 +115,13 @@ export function Admin() {
             Tuturor
           </button>
         </div>
-
         {msgMode === 'one' && (
           <div className="mb-3 space-y-2">
             <input
               type="search"
               value={userQuery}
               onChange={(e) => setUserQuery(e.target.value)}
-              placeholder="Caută după nume, telefon, oraș…"
+              placeholder="Caută nume / telefon / email / oraș…"
               className="w-full h-10 rounded-xl border border-gray-200 px-3 text-sm"
             />
             {selected && (
@@ -190,13 +150,11 @@ export function Admin() {
             </div>
           </div>
         )}
-
         {msgMode === 'all' && (
           <p className="text-xs text-gray-500 mb-2">
             Mesajul ajunge la toți utilizatorii din această aplicație.
           </p>
         )}
-
         <textarea
           value={msgText}
           onChange={(e) => setMsgText(e.target.value)}
@@ -213,49 +171,9 @@ export function Admin() {
         </button>
       </section>
 
-      <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
-          <Link2 size={14} /> Link-uri hub (Setări)
-        </h2>
-        <div className="space-y-3">
-          {links.map((link, i) => (
-            <div key={link.id} className="p-3 bg-white rounded-xl border border-gray-100 space-y-2">
-              <input value={link.title} onChange={(e) => { const n=[...links]; n[i]={...link,title:e.target.value}; setLinks(n); }}
-                className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="Titlu" />
-              <input value={link.url} onChange={(e) => { const n=[...links]; n[i]={...link,url:e.target.value}; setLinks(n); }}
-                className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="URL" />
-              <input value={link.description||''} onChange={(e) => { const n=[...links]; n[i]={...link,description:e.target.value}; setLinks(n); }}
-                className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="Descriere" />
-              <input value={link.photo||''} onChange={(e) => { const n=[...links]; n[i]={...link,photo:e.target.value}; setLinks(n); }}
-                className="w-full h-9 rounded-lg border border-gray-200 px-2 text-sm" placeholder="Photo / thumb URL" />
-            </div>
-          ))}
-          <button type="button" onClick={() => setLinks([...links,{id:'h'+Date.now(),title:'Link nou',url:'https://',description:''}])}
-            className="text-sm text-terracotta font-medium">+ Adaugă link</button>
-          <button type="button" onClick={saveLinks}
-            className="block w-full h-10 rounded-xl bg-terracotta text-white text-sm font-semibold">Salvează link-uri</button>
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-2">Recenzii ({reviews.length})</h2>
-        <div className="space-y-2">
-          {reviews.map((r) => (
-            <div key={r.id} className="p-3 bg-white rounded-xl border border-gray-100 flex gap-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-xs text-gray-500">
-                  {r.authorName} → {users.find((u)=>u.id===r.targetUserId)?.name} · ★{r.rating}
-                </p>
-                <p className="text-sm truncate">{r.text}</p>
-              </div>
-              <button type="button" onClick={() => { if (confirm('Ștergi recenzia?')) deleteReview(r.id); }}
-                className="w-9 h-9 rounded-lg bg-peach/40 text-terracotta-dark flex items-center justify-center shrink-0">
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+      <AdminThreads onToast={setToast} />
+      <AdminHub onToast={setToast} />
+      <AdminReviews />
 
       {toast && (
         <div
