@@ -46,6 +46,9 @@ export function Account() {
           <p className="text-sm text-gray-500">
             {currentUser.phone} · {currentUser.city}
           </p>
+          {currentUser.email && (
+            <p className="text-xs text-earth-muted truncate">{currentUser.email}</p>
+          )}
           <StarRating value={currentUser.rating} count={currentUser.ratingCount} size={12} />
         </div>
       </div>
@@ -83,7 +86,15 @@ export function Account() {
           type="button"
           onClick={() => {
             logout();
-            navigate('/');
+            navigate('/auth', { replace: true });
+            // Ensure UI drops session even if a subscriber missed the update
+            window.setTimeout(() => {
+              if (localStorage.getItem('jdoz_session')) {
+                localStorage.removeItem('jdoz_session');
+              }
+              window.location.hash = '#/auth';
+              window.location.reload();
+            }, 50);
           }}
           className="w-full flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-100 text-terracotta-dark"
         >
