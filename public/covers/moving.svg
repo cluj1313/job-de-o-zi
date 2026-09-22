@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0dcc4"/><stop offset="100%" stop-color="#c46a3a"/></linearGradient>
+</defs>
+<rect width="800" height="450" fill="url(#bg)"/>
+<!-- road -->
+<rect y="340" width="800" height="110" fill="#5c4030" opacity="0.55"/>
+<rect y="390" width="800" height="8" fill="#faf6f0" opacity="0.5" stroke-dasharray="40 30"/>
+<!-- van -->
+<rect x="180" y="200" width="320" height="140" rx="16" fill="#c9922a"/>
+<rect x="480" y="230" width="140" height="110" rx="12" fill="#e0a84a"/>
+<rect x="510" y="250" width="70" height="50" rx="6" fill="#3d2b1f" opacity="0.35"/>
+<circle cx="260" cy="350" r="36" fill="#3d2b1f"/><circle cx="260" cy="350" r="16" fill="#e6d3b3"/>
+<circle cx="520" cy="350" r="36" fill="#3d2b1f"/><circle cx="520" cy="350" r="16" fill="#e6d3b3"/>
+<!-- boxes on van -->
+<rect x="210" y="160" width="70" height="50" fill="#c46a3a"/><rect x="290" y="145" width="80" height="60" fill="#a85a32"/>
+<text x="400" y="120" text-anchor="middle" fill="#3d2b1f" font-family="system-ui,sans-serif" font-size="28" font-weight="700">Mutări</text>
+</svg>
