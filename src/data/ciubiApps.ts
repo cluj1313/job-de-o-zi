@@ -6,6 +6,8 @@ export interface CiubiApp {
   description: string;
   thumb: string;
   color: string;
+  /** Optional CTA label shown beside the thumb (e.g. Pitch). */
+  cta?: string;
 }
 
 export const CIUBI_APPS: CiubiApp[] = [
@@ -30,7 +32,7 @@ export const CIUBI_APPS: CiubiApp[] = [
     title: 'Produse Românești',
     url: 'https://bloom-falcon-zephyr-atlas.grok.me/',
     description: 'Marfă fabricată aici, în țară.',
-    thumb: '',
+    thumb: '/job-de-o-zi/assets/produse-hub.jpg',
     color: '#c46a3a',
   },
   {
@@ -53,8 +55,9 @@ export const CIUBI_APPS: CiubiApp[] = [
     id: 'pitch',
     title: 'Pitch sponsor hub',
     url: 'https://cluj1313.github.io/pitch-sponsor/?v=pr14',
-    description: 'Ecosistemul Ciubi — prezentare pentru sponsori.',
-    thumb: 'https://cluj1313.github.io/pitch-sponsor/icon.svg',
+    description: 'Caut sponsori pentru aplicații care ajută românii.',
+    thumb: '/job-de-o-zi/assets/pitch-thumb.jpg',
     color: '#3d2b1f',
+    cta: 'Vezi pitch-ul',
   },
 ];
