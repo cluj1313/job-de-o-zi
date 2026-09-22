@@ -1,4 +1,5 @@
-import { Heart, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, MapPin, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Job, User } from '../types';
 import { StarRating } from './StarRating';
@@ -14,18 +15,34 @@ export function JobCard({ job, user }: Props) {
   const navigate = useNavigate();
   const { favorites, toggleFavorite } = useStore();
   const liked = favorites.includes(job.id);
+  const [imgFailed, setImgFailed] = useState(false);
+  const src = resolveAsset(job.photo);
 
   return (
     <article
       className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden active:scale-[0.99] transition"
       onClick={() => navigate(`/profil/${job.userId}?job=${job.id}`)}
     >
-      <div className="relative h-36 bg-gray-200">
-        <img
-          src={resolveAsset(job.photo)}
-          alt=""
-          className="w-full h-full object-cover"
-        />
+      <div className="relative h-36 bg-gradient-to-br from-peach via-tan to-terracotta overflow-hidden">
+        {!imgFailed ? (
+          <img
+            src={src}
+            alt=""
+            className="w-full h-full object-cover"
+            onError={() => setImgFailed(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-1.5 text-cream">
+            <Briefcase size={28} className="opacity-90" />
+            <span className="text-xs font-semibold tracking-wide opacity-90">Mockup</span>
+          </div>
+        )}
+        <span
+          className="absolute top-2 left-2 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-earth/70 text-cream backdrop-blur-sm shadow-sm"
+          title="Imagine demonstrativă"
+        >
+          Mockup
+        </span>
         <button
           type="button"
           aria-label="Favorite"
