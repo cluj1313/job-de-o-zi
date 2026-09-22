@@ -41,6 +41,12 @@ export interface Review {
   createdAt: string;
 }
 
+/**
+ * Message model — localStorage MVP, shaped for a future API.
+ * - broadcast + toId:'all' = Job de o zi users only (not cross-app)
+ * - hiddenFor = per-user ephemeral dismiss (recipient leave)
+ * - deliveredAt / readAt = asymmetric receipts (admin sees both; users only Livrat)
+ */
 export interface Message {
   id: string;
   fromId: string;
@@ -49,6 +55,12 @@ export interface Message {
   text: string;
   createdAt: string;
   broadcast?: boolean;
+  /** ISO — marked when recipient inbox sees the message */
+  deliveredAt?: string;
+  /** ISO — marked when recipient opens the thread (admin-visible Citit) */
+  readAt?: string;
+  /** User ids for whom this message is hidden on their side only */
+  hiddenFor?: string[];
 }
 
 export interface HubLink {
