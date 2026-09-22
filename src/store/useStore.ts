@@ -9,6 +9,13 @@ import {
 } from '../data/seed';
 import { migrateHubLinks } from '../utils/hubMigrate';
 import { migrateSeedCoversInPlace, migrateAdminIdentityInPlace } from './migrateSeedCovers';
+import {
+  buildMessage,
+  withHiddenFor,
+  withDelivered,
+  withRead,
+  type SendMessageInput,
+} from '../utils/messagesApi';
 
 const KEYS = {
   users: 'jdoz_users',
@@ -235,13 +242,63 @@ export function useStore() {
     );
   }, []);
 
-  const sendMessage = useCallback((msg: Omit<Message, 'id' | 'createdAt'>) => {
-    const full: Message = {
-      ...msg,
-      id: 'm' + Date.now(),
-      createdAt: new Date().toISOString(),
-    };
+  const sendMessage = useCallback((msg: SendMessageInput) => {
+    const full = buildMessage(msg);
     save(KEYS.messages, [full, ...load<Message[]>(KEYS.messages, seedMessages)]);
+    return full;
+  }, []);
+
+  /** Hard-delete — admin/owner can remove any message from middle of a thread */
+  const deleteMessage = useCallback((messageId: string) => {
+    save(
+      KEYS.messages,
+      load<Message[]>(KEYS.messages, seedMessages).filter((m) => m.id !== messageId),
+    );
+  }, []);
+
+  /** Recipient leave: hide only on their side; admin still sees the thread */
+  const hideMessageForUser = useCallback((messageId: string, userId: string) => {
+    const next = load<Message[]>(KEYS.messages, seedMessages).map((m) =>
+      m.id === messageId ? withHiddenFor(m, userId) : m,
+    );
+    save(KEYS.messages, next);
+  }, []);
+
+  const hideMessagesForUser = useCallback((messageIds: string[], userId: string) => {
+    if (!messageIds.length) return;
+    const idSet = new Set(messageIds);
+    const next = load<Message[]>(KEYS.messages, seedMessages).map((m) =>
+      idSet.has(m.id) ? withHiddenFor(m, userId) : m,
+    );
+    save(KEYS.messages, next);
+  }, []);
+
+  /** Mark delivered when recipient's inbox lists the message */
+  const markMessagesDelivered = useCallback((messageIds: string[]) => {
+    if (!messageIds.length) return;
+    const idSet = new Set(messageIds);
+    const now = new Date().toISOString();
+    let changed = false;
+    const next = load<Message[]>(KEYS.messages, seedMessages).map((m) => {
+      if (!idSet.has(m.id) || m.deliveredAt) return m;
+      changed = true;
+      return withDelivered(m, now);
+    });
+    if (changed) save(KEYS.messages, next);
+  }, []);
+
+  /** Mark read when recipient opens the thread (Citit — admin-visible) */
+  const markMessagesRead = useCallback((messageIds: string[]) => {
+    if (!messageIds.length) return;
+    const idSet = new Set(messageIds);
+    const now = new Date().toISOString();
+    let changed = false;
+    const next = load<Message[]>(KEYS.messages, seedMessages).map((m) => {
+      if (!idSet.has(m.id) || m.readAt) return m;
+      changed = true;
+      return withRead(m, now);
+    });
+    if (changed) save(KEYS.messages, next);
   }, []);
 
   const updateSettings = useCallback((patch: Partial<AppSettings>) => {
@@ -268,6 +325,11 @@ export function useStore() {
     replyReview,
     deleteReview,
     sendMessage,
+    deleteMessage,
+    hideMessageForUser,
+    hideMessagesForUser,
+    markMessagesDelivered,
+    markMessagesRead,
     updateSettings,
     getUser,
   };
