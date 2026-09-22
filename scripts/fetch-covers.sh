@@ -19,14 +19,21 @@ decode_b64() {
 }
 decode_b64 "$ROOT/scripts/pitch-thumb.b64" "$ASSETS/pitch-thumb.jpg"
 decode_b64 "$ROOT/scripts/produse-hub.b64" "$ASSETS/produse-hub.jpg"
+rparts2=()
+for i in $(seq 0 15); do
+  f=$(printf "$ROOT/scripts/home.b64.r%02d" $i)
+  rparts2+=( "$f" )
+done
 parts=( "$ROOT/scripts/home.b64.p0" "$ROOT/scripts/home.b64.p1" "$ROOT/scripts/home.b64.p2" "$ROOT/scripts/home.b64.p3" )
-if [[ -f "${parts[0]}" && -f "${parts[1]}" && -f "${parts[2]}" && -f "${parts[3]}" ]]; then
-  echo "assemble home.jpg from pocket-watch collage parts"
+if [[ -f "${rparts2[0]}" && -f "${rparts2[15]}" ]]; then
+  echo "assemble home.jpg from pocket-watch collage r-parts"
+  cat "${rparts2[@]}" | base64 -d > "$DIR/home.jpg"
+elif [[ -f "${parts[0]}" && $(wc -c < "${parts[0]}") -gt 100 ]]; then
+  echo "assemble home.jpg from pocket-watch collage p-parts"
   cat "${parts[@]}" | base64 -d > "$DIR/home.jpg"
 elif [[ -f "$DIR/home.jpg" && $(wc -c < "$DIR/home.jpg") -gt 10000 ]]; then
-  echo "keep committed public/covers/home.jpg (pocket-watch collage)"
+  echo "keep committed public/covers/home.jpg"
 elif [[ -f "$ASSETS/cover-home.jpg" && $(wc -c < "$ASSETS/cover-home.jpg") -gt 10000 ]]; then
-  echo "copy assets/cover-home.jpg → covers/home.jpg"
   cp "$ASSETS/cover-home.jpg" "$DIR/home.jpg"
 else
   echo "ERROR: missing pocket-watch collage" >&2
