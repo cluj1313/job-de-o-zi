@@ -34,14 +34,13 @@ export function JobCard({ job, user }: Props) {
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-1.5 text-cream">
             <Briefcase size={28} className="opacity-90" />
-            <span className="text-xs font-semibold tracking-wide opacity-90">Mockup</span>
           </div>
         )}
         <span
-          className="absolute top-2 left-2 text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-earth/70 text-cream backdrop-blur-sm shadow-sm"
+          className="absolute top-2 left-2 text-[9px] font-medium tracking-wide px-1.5 py-0.5 rounded bg-black/45 text-white/95 backdrop-blur-sm"
           title="Imagine demonstrativă"
         >
-          Mockup
+          Demo
         </span>
         <button
           type="button"

@@ -21,15 +21,8 @@ export function Home() {
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-cream">
             <Briefcase size={48} className="opacity-90" />
-            <span className="text-sm font-semibold tracking-wide">Mockup</span>
           </div>
         )}
-        <span
-          className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-md bg-earth/70 text-cream backdrop-blur-sm shadow-sm"
-          title="Imagine demonstrativă"
-        >
-          Mockup
-        </span>
         <ShareButton />
       </div>
 

@@ -1,14 +1,14 @@
-/** Bundled cover paths under public/covers/ (warm labor mockups). */
+/** Bundled cover paths under public/covers/ (photographic stock + collage). */
 export const COVER_FILES = [
-  'covers/construction.svg',
-  'covers/catering.svg',
-  'covers/warehouse.svg',
-  'covers/painting.svg',
-  'covers/moving.svg',
-  'covers/care.svg',
-  'covers/cleaning.svg',
-  'covers/hostess.svg',
-  'covers/gardening.svg',
+  'covers/construction.jpg',
+  'covers/catering.jpg',
+  'covers/warehouse.jpg',
+  'covers/painting.jpg',
+  'covers/moving.jpg',
+  'covers/care.jpg',
+  'covers/cleaning.jpg',
+  'covers/hostess.jpg',
+  'covers/gardening.jpg',
 ] as const;
 
 const base = import.meta.env.BASE_URL;
@@ -18,15 +18,24 @@ function withBase(path: string): string {
   return `${base}${clean}`;
 }
 
-/** Default Home / jobs hero — construction collage */
-export const coverJobs = withBase('covers/construction.svg');
-export const coverWatch = withBase('covers/gardening.svg');
+/** Default Home / jobs hero — warm jobs + pocket-watch collage */
+export const coverJobs = withBase('covers/home.jpg');
+export const coverWatch = withBase('covers/gardening.jpg');
 
 /** Map thematic keys / legacy refs → local cover file. */
 const LEGACY_MAP: Record<string, string> = {
-  'cover-jobs': 'covers/construction.svg',
-  'cover-home': 'covers/construction.svg',
-  'cover-watch': 'covers/gardening.svg',
+  'cover-jobs': 'covers/home.jpg',
+  'cover-home': 'covers/home.jpg',
+  'cover-watch': 'covers/gardening.jpg',
+  'construction.svg': 'covers/construction.jpg',
+  'catering.svg': 'covers/catering.jpg',
+  'warehouse.svg': 'covers/warehouse.jpg',
+  'painting.svg': 'covers/painting.jpg',
+  'moving.svg': 'covers/moving.jpg',
+  'care.svg': 'covers/care.jpg',
+  'cleaning.svg': 'covers/cleaning.jpg',
+  'hostess.svg': 'covers/hostess.jpg',
+  'gardening.svg': 'covers/gardening.jpg',
 };
 
 export function coverUrl(file: string): string {
@@ -58,12 +67,15 @@ export function resolveAsset(src?: string): string {
     if (src.includes(key)) return coverUrl(file);
   }
   if (src.includes('covers/')) {
-    const m = src.match(/covers\/[\w-]+\.svg/);
-    if (m) return coverUrl(m[0]);
+    const m = src.match(/covers\/[\w-]+\.(?:jpg|jpeg|webp|png|svg)/i);
+    if (m) {
+      const path = m[0].replace(/\.svg$/i, '.jpg');
+      return coverUrl(path);
+    }
   }
   // Absolute site path like /assets/... or covers/...
   if (src.startsWith('/') || src.startsWith('assets/') || src.startsWith('covers/')) {
-    return withBase(src);
+    return withBase(src.replace(/\.svg$/i, '.jpg'));
   }
   return src;
 }
