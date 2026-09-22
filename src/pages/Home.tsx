@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Search, Bot } from 'lucide-react';
 import { ShareButton } from '../components/ShareButton';
@@ -5,15 +6,30 @@ import { coverJobs } from '../utils/assets';
 
 export function Home() {
   const navigate = useNavigate();
+  const [imgFailed, setImgFailed] = useState(false);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-cream relative">
-      <div className="relative w-full aspect-[16/9] min-h-[220px] max-h-[420px] bg-tan">
-        <img
-          src={coverJobs}
-          alt="Job de o zi"
-          className="w-full h-full object-cover object-center"
-        />
+      <div className="relative w-full aspect-[16/9] min-h-[220px] max-h-[420px] bg-gradient-to-br from-peach via-tan to-terracotta">
+        {!imgFailed ? (
+          <img
+            src={coverJobs}
+            alt="Job de o zi"
+            className="w-full h-full object-cover object-center"
+            onError={() => setImgFailed(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-cream">
+            <Briefcase size={48} className="opacity-90" />
+            <span className="text-sm font-semibold tracking-wide">Mockup</span>
+          </div>
+        )}
+        <span
+          className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-md bg-earth/70 text-cream backdrop-blur-sm shadow-sm"
+          title="Imagine demonstrativă"
+        >
+          Mockup
+        </span>
         <ShareButton />
       </div>
 
