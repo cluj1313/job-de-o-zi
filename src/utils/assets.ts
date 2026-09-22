@@ -1,57 +1,65 @@
-/** Bundled cover paths under public/covers/ (photographic stock + collage). */
-export const COVER_FILES = [
-  'covers/construction.jpg',
-  'covers/catering.jpg',
-  'covers/warehouse.jpg',
-  'covers/painting.jpg',
-  'covers/moving.jpg',
-  'covers/care.jpg',
-  'covers/cleaning.jpg',
-  'covers/hostess.jpg',
-  'covers/gardening.jpg',
+import {
+  PHOTO_BY_KEY,
+  photoHome,
+  photoGardening,
+  photoConstruction,
+  photoCatering,
+  photoWarehouse,
+  photoPainting,
+  photoMoving,
+  photoCare,
+  photoCleaning,
+  photoHostess,
+} from '../assets/photoCovers';
+
+/** Ordered thematic covers (photographic data URLs). */
+export const COVER_URLS = [
+  photoConstruction,
+  photoCatering,
+  photoWarehouse,
+  photoPainting,
+  photoMoving,
+  photoCare,
+  photoCleaning,
+  photoHostess,
+  photoGardening,
 ] as const;
 
-const base = import.meta.env.BASE_URL;
-
-function withBase(path: string): string {
-  const clean = path.replace(/^\//, '');
-  return `${base}${clean}`;
-}
-
 /** Default Home / jobs hero — warm jobs + pocket-watch collage */
-export const coverJobs = withBase('covers/home.jpg');
-export const coverWatch = withBase('covers/gardening.jpg');
+export const coverJobs = photoHome;
+export const coverWatch = photoGardening;
 
-/** Map thematic keys / legacy refs → local cover file. */
-const LEGACY_MAP: Record<string, string> = {
-  'cover-jobs': 'covers/home.jpg',
-  'cover-home': 'covers/home.jpg',
-  'cover-watch': 'covers/gardening.jpg',
-  'construction.svg': 'covers/construction.jpg',
-  'catering.svg': 'covers/catering.jpg',
-  'warehouse.svg': 'covers/warehouse.jpg',
-  'painting.svg': 'covers/painting.jpg',
-  'moving.svg': 'covers/moving.jpg',
-  'care.svg': 'covers/care.jpg',
-  'cleaning.svg': 'covers/cleaning.jpg',
-  'hostess.svg': 'covers/hostess.jpg',
-  'gardening.svg': 'covers/gardening.jpg',
+const KEY_ALIASES: Record<string, string> = {
+  'cover-jobs': 'home',
+  'cover-home': 'home',
+  'cover-watch': 'gardening',
+  construction: 'construction',
+  catering: 'catering',
+  warehouse: 'warehouse',
+  painting: 'painting',
+  moving: 'moving',
+  care: 'care',
+  cleaning: 'cleaning',
+  hostess: 'hostess',
+  gardening: 'gardening',
+  home: 'home',
 };
 
-export function coverUrl(file: string): string {
-  return withBase(file.replace(/^\//, ''));
+function photoForKey(key: string): string | undefined {
+  const k = KEY_ALIASES[key] || key;
+  return PHOTO_BY_KEY[k];
 }
 
 /** Pick a stable cover by job id hash. */
 export function coverForJobId(id: string): string {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) | 0;
-  const idx = Math.abs(h) % COVER_FILES.length;
-  return coverUrl(COVER_FILES[idx]);
+  const idx = Math.abs(h) % COVER_URLS.length;
+  return COVER_URLS[idx];
 }
 
 /**
- * Resolve known cover paths / legacy refs to bundled covers (base-aware for GH Pages).
+ * Resolve known cover paths / legacy refs to photographic data URLs.
  */
 export function resolveAsset(src?: string): string {
   if (!src) return coverJobs;
@@ -63,19 +71,27 @@ export function resolveAsset(src?: string): string {
   ) {
     return src;
   }
-  for (const [key, file] of Object.entries(LEGACY_MAP)) {
-    if (src.includes(key)) return coverUrl(file);
+  // covers/foo.jpg|svg or bare foo
+  const m = src.match(/(?:covers\/)?([\w-]+)\.(?:jpg|jpeg|webp|png|svg)/i);
+  if (m) {
+    const hit = photoForKey(m[1].toLowerCase());
+    if (hit) return hit;
   }
-  if (src.includes('covers/')) {
-    const m = src.match(/covers\/[\w-]+\.(?:jpg|jpeg|webp|png|svg)/i);
-    if (m) {
-      const path = m[0].replace(/\.svg$/i, '.jpg');
-      return coverUrl(path);
+  for (const key of Object.keys(KEY_ALIASES)) {
+    if (src.includes(key)) {
+      const hit = photoForKey(key);
+      if (hit) return hit;
     }
   }
-  // Absolute site path like /assets/... or covers/...
-  if (src.startsWith('/') || src.startsWith('assets/') || src.startsWith('covers/')) {
-    return withBase(src.replace(/\.svg$/i, '.jpg'));
+  return coverJobs;
+}
+
+/** @deprecated path helper kept for any callers expecting site-relative URLs */
+export function coverUrl(file: string): string {
+  const m = file.match(/([\w-]+)\./);
+  if (m) {
+    const hit = photoForKey(m[1]);
+    if (hit) return hit;
   }
-  return src;
+  return coverJobs;
 }
