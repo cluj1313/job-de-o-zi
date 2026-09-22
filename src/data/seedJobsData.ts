@@ -8,7 +8,7 @@ export const seedJobs: Job[] = [
     description: 'Ajutor pe șantier: cărămidă, moloz, curățenie. Echipament asigurat. Plată zilnică.',
     rate: 120,
     city: 'Cluj-Napoca',
-    photo: 'covers/construction.svg',
+    photo: 'covers/construction.jpg',
     createdAt: '2026-09-18T08:00:00',
   },
   {
@@ -19,7 +19,7 @@ export const seedJobs: Job[] = [
     description: 'Seară de vineri, 18:00–01:00. Uniformă oferită. Experiență preferată.',
     rate: 80,
     city: 'București',
-    photo: 'covers/catering.svg',
+    photo: 'covers/catering.jpg',
     createdAt: '2026-09-19T10:00:00',
   },
   {
@@ -30,7 +30,7 @@ export const seedJobs: Job[] = [
     description: 'Mutare paleți, scanare colete. Pauză inclusă. Transport din centrul Brașovului.',
     rate: 100,
     city: 'Brașov',
-    photo: 'covers/warehouse.svg',
+    photo: 'covers/warehouse.jpg',
     createdAt: '2026-09-20T07:30:00',
   },
   {
@@ -41,7 +41,7 @@ export const seedJobs: Job[] = [
     description: 'Pregătire pereți, vopsit. Materialele sunt pe șantier.',
     rate: 90,
     city: 'Constanța',
-    photo: 'covers/painting.svg',
+    photo: 'covers/painting.jpg',
     createdAt: '2026-09-17T12:00:00',
   },
   {
@@ -52,7 +52,7 @@ export const seedJobs: Job[] = [
     description: 'Disponibil imediat în Timișoara. Am mașină utilitară.',
     rate: 70,
     city: 'Timișoara',
-    photo: 'covers/moving.svg',
+    photo: 'covers/moving.jpg',
     createdAt: '2026-09-19T14:00:00',
   },
   {
@@ -63,7 +63,7 @@ export const seedJobs: Job[] = [
     description: 'Copii 2–10 ani. Referințe la cerere. Iași / Copou.',
     rate: 50,
     city: 'Iași',
-    photo: 'covers/care.svg',
+    photo: 'covers/care.jpg',
     createdAt: '2026-09-18T16:00:00',
   },
   {
@@ -74,7 +74,7 @@ export const seedJobs: Job[] = [
     description: 'Studentă, engleză fluentă. Disponibilă sâmbătă–duminică.',
     rate: 60,
     city: 'Cluj-Napoca',
-    photo: 'covers/hostess.svg',
+    photo: 'covers/hostess.jpg',
     createdAt: '2026-09-20T09:00:00',
   },
   {
@@ -85,7 +85,7 @@ export const seedJobs: Job[] = [
     description: 'Experiență 3 ani. Materialele mele sau ale clientului.',
     rate: 55,
     city: 'Timișoara',
-    photo: 'covers/cleaning.svg',
+    photo: 'covers/cleaning.jpg',
     createdAt: '2026-09-16T11:00:00',
   },
   {
@@ -97,7 +97,7 @@ export const seedJobs: Job[] = [
       'Finisaje interioare: zugrăveli, gresie, renovări. Echipă de 2–3 persoane. Plată pe zi sau pe metru. Cluj-Napoca și împrejurimi.',
     rate: 110,
     city: 'Cluj-Napoca',
-    photo: 'covers/painting.svg',
+    photo: 'covers/painting.jpg',
     createdAt: '2026-09-20T08:00:00',
   },
 ];

@@ -27,6 +27,11 @@ export function migrateSeedCoversInPlace() {
           changed = true;
           return { ...j, photo };
         }
+        // Legacy SVG mockups → photographic JPG covers
+        if (j.photo && j.photo.includes('.svg')) {
+          changed = true;
+          return { ...j, photo: j.photo.replace(/\.svg$/i, '.jpg') };
+        }
         return j;
       });
       // Ensure all seed jobs exist (re-add missing demo cards)

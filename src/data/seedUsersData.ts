@@ -15,7 +15,7 @@ export const seedUsers: User[] = [
     isAdmin: true,
     isOwner: true,
     description: 'Administrator platformă Job de o zi. Contact pentru parteneriate și suport.',
-    cover: 'covers/gardening.svg',
+    cover: 'covers/gardening.jpg',
     avatar: '',
   },
   {
@@ -28,7 +28,7 @@ export const seedUsers: User[] = [
     rating: 4.8,
     ratingCount: 24,
     description: 'Firmă construcții — angajăm zilieri pentru șantiere în Cluj.',
-    cover: 'covers/construction.svg',
+    cover: 'covers/construction.jpg',
   },
   {
     id: 'u2',
@@ -107,6 +107,6 @@ export const seedUsers: User[] = [
     ratingCount: 47,
     description:
       '15 ani experiență în finisaje. Lucrăm curat, respectăm termenele. Materialele pot fi asigurate de noi sau de client. Zone: Cluj, Florești, Apahida.',
-    cover: 'covers/construction.svg',
+    cover: 'covers/construction.jpg',
   },
 ];
