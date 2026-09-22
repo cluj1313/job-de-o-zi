@@ -17,7 +17,11 @@ export function formatWhen(iso: string) {
   });
 }
 
-/** Asymmetric receipts: admin/owner sees Livrat+Citit; others only Livrat on own outbound */
+/**
+ * Asymmetric receipts (WhatsApp-like, under bubble):
+ * - Admin/owner: Livrat → Citit on own outbound
+ * - Regular user: only „Livrat” on own outbound (never Citit for admin-read)
+ */
 export function Receipts({
   m,
   viewerIsAdmin,
@@ -33,36 +37,39 @@ export function Receipts({
 
   if (viewerIsAdmin) {
     return (
-      <span className="inline-flex items-center gap-1 text-[10px] text-earth-muted">
+      <span
+        className="inline-flex items-center gap-1 text-xs font-medium text-earth-muted"
+        data-receipt={read ? 'citit' : delivered ? 'livrat' : 'trimis'}
+      >
         {read ? (
           <>
-            <CheckCheck size={12} className="text-terracotta" /> Citit
+            <CheckCheck size={14} className="text-terracotta shrink-0" aria-hidden />
+            Citit
           </>
         ) : delivered ? (
           <>
-            <Check size={12} className="text-ochre" /> Livrat
+            <Check size={14} className="text-ochre shrink-0" aria-hidden />
+            Livrat
           </>
         ) : (
           <>
-            <Check size={12} /> Trimis
+            <Check size={14} className="shrink-0" aria-hidden />
+            Trimis
           </>
         )}
       </span>
     );
   }
 
-  // Recipient / regular user: never reveal whether admin read their reply
+  // User: mock delivers immediately — always show clear „Livrat”, never Citit
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] text-earth-muted">
-      {delivered ? (
-        <>
-          <Check size={12} className="text-ochre" /> Livrat
-        </>
-      ) : (
-        <>
-          <Check size={12} /> Trimis
-        </>
-      )}
+    <span
+      className="inline-flex items-center gap-1 text-xs font-semibold text-ochre"
+      data-receipt="livrat"
+      aria-label="Livrat"
+    >
+      <Check size={14} className="shrink-0" aria-hidden />
+      Livrat
     </span>
   );
 }
