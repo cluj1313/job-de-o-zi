@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Search, Bot } from 'lucide-react';
 import { ShareButton } from '../components/ShareButton';
+import { CoverClock } from '../components/CoverClock';
 import { coverJobs } from '../utils/assets';
 
 export function Home() {
@@ -24,6 +25,7 @@ export function Home() {
           </div>
         )}
         <ShareButton />
+        <CoverClock />
       </div>
 
       <div className="flex-1 px-4 pt-4 pb-4 space-y-2.5">
