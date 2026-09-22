@@ -1,20 +1,27 @@
 import type { User } from '../types';
-export const DEMO_ADMIN_PHONE = '0700000000';
+
+/** Digits-only for login; display as 0770.148.119 in UI copy */
+export const DEMO_ADMIN_PHONE = '0770148119';
 export const DEMO_ADMIN_PASSWORD = 'admin123';
+export const DEMO_ADMIN_EMAIL = 'cluj1313@gmail.com';
+export const DEMO_ADMIN_NAME = 'Cioban Iosif Gabriel';
+export const DEMO_ADMIN_PHONE_DISPLAY = '0770.148.119';
 
 export const seedUsers: User[] = [
   {
     id: 'admin',
-    name: 'Admin Demo',
+    name: DEMO_ADMIN_NAME,
     phone: DEMO_ADMIN_PHONE,
     password: DEMO_ADMIN_PASSWORD,
+    email: DEMO_ADMIN_EMAIL,
     city: 'Cluj-Napoca',
     role: 'offerer',
     rating: 5,
     ratingCount: 12,
     isAdmin: true,
     isOwner: true,
-    description: 'Administrator platformă Job de o zi. Contact pentru parteneriate și suport.',
+    description:
+      `Proprietar platformă Job de o zi.\nEmail: ${DEMO_ADMIN_EMAIL}\nTel. ${DEMO_ADMIN_PHONE_DISPLAY}\nContact pentru parteneriate și suport.`,
     cover: 'covers/gardening.jpg',
     avatar: '',
   },

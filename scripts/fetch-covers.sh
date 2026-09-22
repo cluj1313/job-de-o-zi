@@ -2,7 +2,8 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIR="$ROOT/public/covers"
-mkdir -p "$DIR"
+ASSETS="$ROOT/public/assets"
+mkdir -p "$DIR" "$ASSETS"
 UA="Mozilla/5.0 job-de-o-zi-build"
 fetch() {
   local out="$1" url="$2"
@@ -10,8 +11,37 @@ fetch() {
   curl -fsSL -A "$UA" -o "$DIR/$out" "$url"
 }
 
-# Home hero — warm teamwork / day-labor photograph
-fetch home.jpg "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+decode_b64() {
+  local src="$1" dest="$2"
+  if [[ -f "$src" ]]; then
+    echo "decode $(basename "$src") → $dest"
+    base64 -d < "$src" > "$dest"
+  fi
+}
+
+# Hub thumbs (lion pitch without text overlay + Produse photo)
+decode_b64 "$ROOT/scripts/pitch-thumb.b64" "$ASSETS/pitch-thumb.jpg"
+decode_b64 "$ROOT/scripts/produse-hub.b64" "$ASSETS/produse-hub.jpg"
+# Prefer committed user collage (base64 parts) for Home hero — pocket watch + jobs
+parts=( "$ROOT/scripts/home.b64.p0" "$ROOT/scripts/home.b64.p1" "$ROOT/scripts/home.b64.p2" "$ROOT/scripts/home.b64.p3" )
+if [[ -f "${parts[0]}" && -f "${parts[1]}" && -f "${parts[2]}" && -f "${parts[3]}" ]]; then
+  echo "assemble home.jpg from committed pocket-watch collage parts"
+  cat "${parts[@]}" | base64 -d > "$DIR/home.jpg"
+elif [[ -f "$ROOT/scripts/home.b64.part0" && -f "$ROOT/scripts/home.b64.part1" ]]; then
+  echo "assemble home.jpg from committed collage (legacy 2-part)"
+  cat "$ROOT/scripts/home.b64.part0" "$ROOT/scripts/home.b64.part1" | base64 -d > "$DIR/home.jpg"
+elif [[ -f "$ASSETS/cover-home.jpg" ]]; then
+  echo "copy public/assets/cover-home.jpg → covers/home.jpg"
+  cp "$ASSETS/cover-home.jpg" "$DIR/home.jpg"
+else
+  echo "ERROR: missing pocket-watch collage parts (refusing Unsplash teamwork fallback)" >&2
+  exit 1
+fi
+
+# Trade-matching photographic covers (real photos — not SVG)
+# Keep assets/cover-home in sync for any legacy refs
+cp "$DIR/home.jpg" "$ASSETS/cover-home.jpg"
+
 fetch construction.jpg "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80"
 fetch catering.jpg "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
 fetch warehouse.jpg "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80"
@@ -21,4 +51,4 @@ fetch care.jpg "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?aut
 fetch cleaning.jpg "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80"
 fetch hostess.jpg "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
 fetch gardening.jpg "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80"
-ls -la "$DIR"
+ls -la "$DIR" "$ASSETS"
