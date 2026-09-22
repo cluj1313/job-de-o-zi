@@ -11,9 +11,14 @@ fetch() {
 }
 
 # Prefer committed user collage (base64 parts) for Home hero
-if [[ -f "$ROOT/scripts/home.b64.part0" && -f "$ROOT/scripts/home.b64.part1" ]]; then
-  echo "assemble home.jpg from committed collage"
-  cat "$ROOT/scripts/home.b64.part0" "$ROOT/scripts/home.b64.part1" | base64 -d > "$DIR/home.jpg"
+parts=( "$ROOT/scripts/home.b64.p0" "$ROOT/scripts/home.b64.p1" "$ROOT/scripts/home.b64.p2" "$ROOT/scripts/home.b64.p3" )
+if [[ -f "${parts[0]}" && -f "${parts[1]}" && -f "${parts[2]}" && -f "${parts[3]}" ]]; then
+  echo "assemble home.jpg from committed collage parts"
+  cat "${parts[@]}" | base64 -d > "$DIR/home.jpg"
+elif [[ -f "$ROOT/scripts/home.b64.part0" && -f "$ROOT/scripts/home.b64.part1" ]]; then
+  echo "assemble home.jpg from committed collage (legacy 2-part)"
+  cat "$ROOT/scripts/home.b64.part0" "$ROOT/scripts/home.b64.part1" | base64 -d > "$DIR/home.jpg" || \
+    fetch home.jpg "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
 else
   fetch home.jpg "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
 fi
