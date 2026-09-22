@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <linearGradient id="wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#e6d3b3"/><stop offset="55%" stop-color="#f5e6d3"/><stop offset="100%" stop-color="#c46a3a"/></linearGradient>
+</defs>
+<rect width="800" height="450" fill="url(#wall)"/>
+<!-- paint roller -->
+<rect x="480" y="80" width="28" height="160" rx="6" fill="#faf6f0" stroke="#3d2b1f" stroke-width="3"/>
+<rect x="450" y="60" width="88" height="36" rx="8" fill="#c46a3a"/>
+<line x1="494" y1="240" x2="494" y2="340" stroke="#3d2b1f" stroke-width="8" stroke-linecap="round"/>
+<!-- drips / strokes -->
+<path d="M120 100 Q200 180 140 280 T200 400" stroke="#c9922a" stroke-width="40" fill="none" opacity="0.7" stroke-linecap="round"/>
+<path d="M260 60 Q300 200 240 350" stroke="#c46a3a" stroke-width="32" fill="none" opacity="0.55" stroke-linecap="round"/>
+<!-- bucket -->
+<path d="M560 300 L580 400 L680 400 L700 300 Z" fill="#3d2b1f" opacity="0.8"/>
+<ellipse cx="630" cy="300" rx="70" ry="18" fill="#c9922a"/>
+<ellipse cx="630" cy="295" rx="50" ry="10" fill="#e0a84a" opacity="0.8"/>
+<text x="400" y="430" text-anchor="middle" fill="#3d2b1f" font-family="system-ui,sans-serif" font-size="28" font-weight="700">Zugrăveli</text>
+</svg>

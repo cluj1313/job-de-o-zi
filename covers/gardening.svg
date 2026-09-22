@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5e6d3"/><stop offset="100%" stop-color="#c9922a"/></linearGradient>
+</defs>
+<rect width="800" height="450" fill="url(#sky)"/>
+<rect y="300" width="800" height="150" fill="#6b8f3c"/>
+<!-- sun -->
+<circle cx="650" cy="90" r="50" fill="#e0a84a" opacity="0.9"/>
+<!-- plants -->
+<g stroke="#3d5c2a" stroke-width="6" fill="#7da045">
+  <path d="M150 300 Q130 220 160 160 Q180 220 170 300"/><circle cx="160" cy="150" r="28"/>
+  <path d="M280 310 Q250 200 290 120 Q310 200 300 310"/><circle cx="290" cy="110" r="34"/>
+  <path d="M420 305 Q400 230 430 170 Q450 230 440 305"/><circle cx="430" cy="160" r="30"/>
+</g>
+<!-- flower pots -->
+<rect x="520" y="280" width="70" height="50" rx="6" fill="#c46a3a"/>
+<path d="M555 280 Q555 200 555 200" stroke="#3d5c2a" stroke-width="5"/>
+<circle cx="555" cy="190" r="24" fill="#c9922a"/>
+<rect x="620" y="290" width="60" height="45" rx="6" fill="#a85a32"/>
+<path d="M650 290 Q650 220 650 220" stroke="#3d5c2a" stroke-width="5"/>
+<circle cx="650" cy="210" r="20" fill="#e0a84a"/>
+<!-- shovel -->
+<line x1="100" y1="200" x2="100" y2="360" stroke="#5c4030" stroke-width="8"/>
+<path d="M80 360 L120 360 L110 400 L90 400 Z" fill="#3d2b1f"/>
+<text x="400" y="420" text-anchor="middle" fill="#faf6f0" font-family="system-ui,sans-serif" font-size="28" font-weight="700">Grădinărit</text>
+</svg>
