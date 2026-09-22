@@ -4,48 +4,58 @@ import { ArrowLeft, Ban, Trash2, Megaphone, Link2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import type { HubLink } from '../types';
 
+type MsgMode = 'one' | 'all';
+
 export function Admin() {
   const {
     currentUser, users, reviews, updateUser, deleteUser, deleteReview,
     sendMessage, settings, updateSettings,
   } = useStore();
 
-  const [broadcast, setBroadcast] = useState('');
+  const [msgMode, setMsgMode] = useState<MsgMode>('one');
   const [msgUserId, setMsgUserId] = useState('');
   const [msgText, setMsgText] = useState('');
   const [links, setLinks] = useState<HubLink[]>(settings.hubLinks);
 
   if (!currentUser?.isAdmin) return <Navigate to="/cont" replace />;
 
-  function doBroadcast() {
-    if (!broadcast.trim()) return;
-    sendMessage({
-      fromId: currentUser!.id,
-      fromName: currentUser!.name,
-      toId: 'all',
-      text: broadcast.trim(),
-      broadcast: true,
-    });
-    setBroadcast('');
-    alert('Broadcast trimis');
-  }
+  function send() {
+    const text = msgText.trim();
+    if (!text) return;
 
-  function doMsg() {
-    if (!msgUserId || !msgText.trim()) return;
+    if (msgMode === 'all') {
+      sendMessage({
+        fromId: currentUser!.id,
+        fromName: currentUser!.name,
+        toId: 'all',
+        text,
+        broadcast: true,
+      });
+      setMsgText('');
+      alert('Trimis tuturor.');
+      return;
+    }
+
+    if (!msgUserId) {
+      alert('Alege un user.');
+      return;
+    }
     sendMessage({
       fromId: currentUser!.id,
       fromName: currentUser!.name,
       toId: msgUserId,
-      text: msgText.trim(),
+      text,
     });
     setMsgText('');
-    alert('Mesaj trimis');
+    alert('Mesaj trimis.');
   }
 
   function saveLinks() {
     updateSettings({ hubLinks: links });
     alert('Link-uri hub salvate');
   }
+
+  const recipients = users.filter((u) => u.id !== currentUser.id);
 
   return (
     <div className="px-4 pt-4 pb-8 space-y-6">
@@ -66,6 +76,7 @@ export function Admin() {
                   {u.blocked && <span className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded ml-1">blocat</span>}
                 </p>
                 <p className="text-xs text-gray-500">{u.phone} · {u.city}</p>
+                {u.email && <p className="text-[11px] text-earth-muted truncate">{u.email}</p>}
               </div>
               {!u.isAdmin && (
                 <>
@@ -86,29 +97,55 @@ export function Admin() {
 
       <section>
         <h2 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
-          <Megaphone size={14} /> Broadcast
+          <Megaphone size={14} /> Mesaje
         </h2>
-        <textarea value={broadcast} onChange={(e) => setBroadcast(e.target.value)} rows={2}
-          placeholder="Mesaj pentru toți..." className="w-full rounded-xl border border-gray-200 p-3 text-sm" />
-        <button type="button" onClick={doBroadcast}
-          className="mt-2 h-10 px-4 rounded-xl bg-terracotta text-white text-sm font-semibold">
-          Trimite broadcast
-        </button>
-      </section>
 
-      <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-2">Mesaj către user</h2>
-        <select value={msgUserId} onChange={(e) => setMsgUserId(e.target.value)}
-          className="w-full h-10 rounded-xl border border-gray-200 px-3 text-sm mb-2">
-          <option value="">Alege user...</option>
-          {users.filter((u) => u.id !== currentUser.id).map((u) => (
-            <option key={u.id} value={u.id}>{u.name}</option>
-          ))}
-        </select>
-        <textarea value={msgText} onChange={(e) => setMsgText(e.target.value)} rows={2}
-          className="w-full rounded-xl border border-gray-200 p-3 text-sm" placeholder="Mesaj..." />
-        <button type="button" onClick={doMsg}
-          className="mt-2 h-10 px-4 rounded-xl bg-earth text-white text-sm font-semibold">
+        <div className="flex rounded-xl bg-gray-100 p-1 mb-3">
+          <button
+            type="button"
+            onClick={() => setMsgMode('one')}
+            className={`flex-1 py-2 rounded-lg text-sm font-semibold ${
+              msgMode === 'one' ? 'bg-white shadow text-terracotta' : 'text-gray-500'
+            }`}
+          >
+            Unui user
+          </button>
+          <button
+            type="button"
+            onClick={() => setMsgMode('all')}
+            className={`flex-1 py-2 rounded-lg text-sm font-semibold ${
+              msgMode === 'all' ? 'bg-white shadow text-terracotta' : 'text-gray-500'
+            }`}
+          >
+            Tuturor
+          </button>
+        </div>
+
+        {msgMode === 'one' && (
+          <select
+            value={msgUserId}
+            onChange={(e) => setMsgUserId(e.target.value)}
+            className="w-full h-10 rounded-xl border border-gray-200 px-3 text-sm mb-2"
+          >
+            <option value="">Alege user...</option>
+            {recipients.map((u) => (
+              <option key={u.id} value={u.id}>{u.name} · {u.phone}</option>
+            ))}
+          </select>
+        )}
+
+        <textarea
+          value={msgText}
+          onChange={(e) => setMsgText(e.target.value)}
+          rows={3}
+          className="w-full rounded-xl border border-gray-200 p-3 text-sm"
+          placeholder={msgMode === 'all' ? 'Mesaj pentru toți...' : 'Mesaj...'}
+        />
+        <button
+          type="button"
+          onClick={send}
+          className="mt-2 h-10 px-4 rounded-xl bg-terracotta text-white text-sm font-semibold"
+        >
           Trimite
         </button>
       </section>
