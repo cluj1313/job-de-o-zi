@@ -1,24 +1,80 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Megaphone, Send } from 'lucide-react';
+import { Megaphone } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import type { Message } from '../types';
+import { peerOf, formatWhen, type ThreadKey } from '../components/MessageBits';
+import { MessagesThread } from '../components/MessagesThread';
 
 export function Messages() {
-  const { currentUser, messages, users, sendMessage } = useStore();
+  const {
+    currentUser,
+    messages,
+    users,
+    markMessagesDelivered,
+  } = useStore();
   const navigate = useNavigate();
-  const [replyTo, setReplyTo] = useState<string | null>(null);
-  const [text, setText] = useState('');
+  const [activeThread, setActiveThread] = useState<ThreadKey | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = window.setTimeout(() => setToast(null), 2800);
+    return () => window.clearTimeout(t);
+  }, [toast]);
+
+  const isAdmin = Boolean(currentUser?.isAdmin || currentUser?.isOwner);
 
   const visible = useMemo(() => {
     if (!currentUser) return messages.filter((m) => m.broadcast);
-    return messages.filter(
-      (m) =>
+    return messages.filter((m) => {
+      const involved =
         m.broadcast ||
+        m.toId === 'all' ||
         m.toId === currentUser.id ||
-        m.fromId === currentUser.id ||
-        m.toId === 'all',
-    );
-  }, [messages, currentUser]);
+        m.fromId === currentUser.id;
+      if (!involved) return false;
+      if (isAdmin) return true;
+      return !(m.hiddenFor || []).includes(currentUser.id);
+    });
+  }, [messages, currentUser, isAdmin]);
+
+  useEffect(() => {
+    if (!currentUser || isAdmin) return;
+    const pending = visible
+      .filter(
+        (m) =>
+          !m.deliveredAt &&
+          m.fromId !== currentUser.id &&
+          (m.toId === currentUser.id || m.broadcast || m.toId === 'all'),
+      )
+      .map((m) => m.id);
+    if (pending.length) markMessagesDelivered(pending);
+  }, [visible, currentUser, isAdmin, markMessagesDelivered]);
+
+  const threads = useMemo(() => {
+    if (!currentUser) return [] as { key: ThreadKey; label: string; preview: string; at: string; unread: number }[];
+    const map = new Map<ThreadKey, Message[]>();
+    for (const m of visible) {
+      const key = peerOf(m, currentUser.id);
+      const list = map.get(key) || [];
+      list.push(m);
+      map.set(key, list);
+    }
+    return Array.from(map.entries())
+      .map(([key, list]) => {
+        const sorted = [...list].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
+        const latest = sorted[0];
+        const peer = key === 'all' ? null : users.find((u) => u.id === key);
+        const label =
+          key === 'all' ? 'Anunțuri (Tuturor)' : peer?.name || latest.fromName || key;
+        const unread = sorted.filter((m) => m.fromId !== currentUser.id && !m.readAt).length;
+        return { key, label, preview: latest.text, at: latest.createdAt, unread };
+      })
+      .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
+  }, [visible, currentUser, users]);
 
   if (!currentUser) {
     return (
@@ -31,108 +87,64 @@ export function Messages() {
         >
           Login
         </button>
-        {visible.length > 0 && (
-          <div className="mt-8 text-left space-y-2">
-            <h2 className="text-sm font-semibold text-gray-600">Anunțuri publice</h2>
-            {visible.map((m) => (
-              <div key={m.id} className="p-3 bg-amber-50 rounded-xl border border-amber-100 text-sm">
-                <div className="flex items-center gap-1 text-amber-800 font-medium text-xs mb-1">
-                  <Megaphone size={12} />
-                  Broadcast
-                </div>
-                {m.text}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     );
   }
 
-  function send() {
-    if (!text.trim() || !replyTo || !currentUser) return;
-    sendMessage({
-      fromId: currentUser.id,
-      fromName: currentUser.name,
-      toId: replyTo,
-      text: text.trim(),
-    });
-    setText('');
-    setReplyTo(null);
+  if (activeThread) {
+    return (
+      <MessagesThread
+        activeThread={activeThread}
+        onBack={() => setActiveThread(null)}
+      />
+    );
   }
 
   return (
-    <div className="px-4 pt-6 pb-6">
-      <h1 className="text-xl font-bold mb-4">Mesaje</h1>
+    <div className="px-4 pt-6 pb-6 relative">
+      <h1 className="text-xl font-bold mb-1">Mesaje</h1>
+      {isAdmin ? (
+        <p className="text-[11px] text-earth-muted mb-4">
+          Vizualizare admin: conversațiile rămân persistente. Livrat + Citit vizibile.
+        </p>
+      ) : (
+        <p className="text-[11px] text-earth-muted mb-4">
+          Deschide un mesaj; la Înapoi dispare doar pe partea ta.
+        </p>
+      )}
       <div className="space-y-2">
-        {visible.map((m) => {
-          const otherId = m.fromId === currentUser.id ? m.toId : m.fromId;
-          const other = users.find((u) => u.id === otherId);
-          return (
-            <div
-              key={m.id}
-              className={`p-3 rounded-xl border text-sm ${
-                m.broadcast
-                  ? 'bg-amber-50 border-amber-100'
-                  : m.fromId === currentUser.id
-                    ? 'bg-terracotta/5 border-terracotta/10 ml-6'
-                    : 'bg-white border-gray-100 mr-6'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-medium text-xs text-gray-600">
-                  {m.broadcast ? (
-                    <span className="inline-flex items-center gap-1 text-amber-800">
-                      <Megaphone size={12} /> {m.fromName}
-                    </span>
-                  ) : (
-                    m.fromName
-                  )}
-                </span>
-                <span className="text-[10px] text-gray-400">
-                  {new Date(m.createdAt).toLocaleString('ro-RO', {
-                    day: '2-digit',
-                    month: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </span>
-              </div>
-              <p>{m.text}</p>
-              {!m.broadcast && m.fromId !== currentUser.id && (
-                <button
-                  type="button"
-                  onClick={() => setReplyTo(m.fromId)}
-                  className="mt-2 text-xs text-terracotta font-semibold"
-                >
-                  Răspunde {other?.name || ''}
-                </button>
-              )}
+        {threads.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => setActiveThread(t.key)}
+            className="w-full text-left p-3 rounded-xl border border-gray-100 bg-white shadow-sm hover:bg-peach/20 transition"
+          >
+            <div className="flex items-center justify-between gap-2 mb-0.5">
+              <span className="font-semibold text-sm truncate inline-flex items-center gap-1.5">
+                {t.key === 'all' && <Megaphone size={14} className="text-ochre shrink-0" />}
+                {t.label}
+              </span>
+              <span className="text-[10px] text-gray-400 shrink-0">{formatWhen(t.at)}</span>
             </div>
-          );
-        })}
-        {visible.length === 0 && (
+            <p className="text-xs text-earth-muted truncate">{t.preview}</p>
+            {t.unread > 0 && (
+              <span className="mt-1 inline-block text-[10px] font-semibold bg-terracotta/15 text-terracotta px-1.5 py-0.5 rounded">
+                {t.unread} nou{t.unread > 1 ? 'e' : ''}
+              </span>
+            )}
+          </button>
+        ))}
+        {threads.length === 0 && (
           <p className="text-center text-gray-400 text-sm py-12">Niciun mesaj.</p>
         )}
       </div>
-
-      {replyTo && (
-        <div className="fixed bottom-20 inset-x-0 max-w-lg mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-3 flex gap-2">
-            <input
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Mesaj..."
-              className="flex-1 h-10 text-sm border border-gray-200 rounded-xl px-3"
-            />
-            <button
-              type="button"
-              onClick={send}
-              className="w-10 h-10 rounded-xl bg-terracotta text-white flex items-center justify-center"
-            >
-              <Send size={16} />
-            </button>
-          </div>
+      {toast && (
+        <div
+          role="status"
+          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 max-w-[90%] px-4 py-2.5 rounded-full bg-earth text-white text-sm font-medium shadow-lg"
+        >
+          {toast}
         </div>
       )}
     </div>
