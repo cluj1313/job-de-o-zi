@@ -14,23 +14,48 @@ decode_b64() {
   local src="$1" dest="$2"
   if [[ -f "$src" ]]; then
     echo "decode $(basename "$src") → $dest"
-    base64 -d < "$src" > "$dest"
+    tr -d '\n\r \t' < "$src" | base64 -d > "$dest"
   fi
 }
 decode_b64 "$ROOT/scripts/pitch-thumb.b64" "$ASSETS/pitch-thumb.jpg"
 decode_b64 "$ROOT/scripts/produse-hub.b64" "$ASSETS/produse-hub.jpg"
-rparts2=()
-for i in $(seq 0 15); do
-  f=$(printf "$ROOT/scripts/home.b64.r%02d" $i)
-  rparts2+=( "$f" )
-done
-parts=( "$ROOT/scripts/home.b64.p0" "$ROOT/scripts/home.b64.p1" "$ROOT/scripts/home.b64.p2" "$ROOT/scripts/home.b64.p3" )
-if [[ -f "${rparts2[0]}" && -f "${rparts2[15]}" ]]; then
+
+# Assemble pocket-watch collage from r00-r15 (strip whitespace; validate JPEG)
+if [[ -f "$ROOT/scripts/home.b64.r00" && -f "$ROOT/scripts/home.b64.r15" ]]; then
   echo "assemble home.jpg from pocket-watch collage r-parts"
-  cat "${rparts2[@]}" | base64 -d > "$DIR/home.jpg"
-elif [[ -f "${parts[0]}" && $(wc -c < "${parts[0]}") -gt 100 ]]; then
-  echo "assemble home.jpg from pocket-watch collage p-parts"
-  cat "${parts[@]}" | base64 -d > "$DIR/home.jpg"
+  if ! ROOT="$ROOT" DIR="$DIR" python3 - <<'PY'
+import base64, os, pathlib, sys
+root = pathlib.Path(os.environ["ROOT"])
+out = pathlib.Path(os.environ["DIR"]) / "home.jpg"
+parts = []
+for i in range(16):
+    p = root / "scripts" / f"home.b64.r{i:02d}"
+    if not p.is_file():
+        print(f"missing {p}", file=sys.stderr)
+        sys.exit(2)
+    parts.append("".join(p.read_text().split()))
+try:
+    data = base64.b64decode("".join(parts), validate=True)
+except Exception as e:
+    print(f"base64 decode failed: {e}", file=sys.stderr)
+    sys.exit(3)
+if data[:3] != b"\xff\xd8\xff":
+    print("decoded home.jpg is not JPEG", file=sys.stderr)
+    sys.exit(4)
+out.write_bytes(data)
+print(f"wrote {out} ({len(data)} bytes)")
+PY
+  then
+    if [[ -f "$DIR/home.jpg" && $(wc -c < "$DIR/home.jpg") -gt 10000 ]]; then
+      echo "WARN: r-parts failed; keeping committed public/covers/home.jpg"
+    elif [[ -f "$ASSETS/cover-home.jpg" && $(wc -c < "$ASSETS/cover-home.jpg") -gt 10000 ]]; then
+      echo "WARN: r-parts failed; using assets/cover-home.jpg"
+      cp "$ASSETS/cover-home.jpg" "$DIR/home.jpg"
+    else
+      echo "ERROR: missing pocket-watch collage" >&2
+      exit 1
+    fi
+  fi
 elif [[ -f "$DIR/home.jpg" && $(wc -c < "$DIR/home.jpg") -gt 10000 ]]; then
   echo "keep committed public/covers/home.jpg"
 elif [[ -f "$ASSETS/cover-home.jpg" && $(wc -c < "$ASSETS/cover-home.jpg") -gt 10000 ]]; then
