@@ -8,6 +8,7 @@ import {
   seedSettings,
 } from '../data/seed';
 import { migrateHubLinks } from '../utils/hubMigrate';
+import { migrateSeedCoversInPlace, migrateAdminIdentityInPlace } from './migrateSeedCovers';
 
 const KEYS = {
   users: 'jdoz_users',
@@ -66,6 +67,8 @@ function ensureSeeded() {
   if (!localStorage.getItem(KEYS.favorites)) save(KEYS.favorites, [] as string[]);
   if (!localStorage.getItem(KEYS.settings)) save(KEYS.settings, seedSettings);
   migrateSettingsInPlace();
+  migrateSeedCoversInPlace();
+  migrateAdminIdentityInPlace();
 }
 
 ensureSeeded();
@@ -113,7 +116,10 @@ export function useStore() {
 
   const login = useCallback((phone: string, password: string): string | null => {
     const users = load<User[]>(KEYS.users, seedUsers);
-    const user = users.find((u) => u.phone === phone && u.password === password);
+    const digits = phone.replace(/[.\s-]/g, '');
+    const user = users.find(
+      (u) => u.password === password && (u.phone === phone || u.phone === digits || u.phone.replace(/[.\s-]/g, '') === digits),
+    );
     if (!user) return 'Telefon sau parolă greșită';
     if (user.blocked) return 'Contul este blocat';
     save(KEYS.session, user.id);
@@ -152,6 +158,14 @@ export function useStore() {
 
   const logout = useCallback(() => {
     localStorage.removeItem(KEYS.session);
+    // Also write explicit null so any stale non-JSON session values are overwritten
+    try {
+      localStorage.setItem(KEYS.session, JSON.stringify(null));
+      localStorage.removeItem(KEYS.session);
+    } catch {
+      /* ignore */
+    }
+    cached = getSnapshot();
     listeners.forEach((l) => l());
   }, []);
 
