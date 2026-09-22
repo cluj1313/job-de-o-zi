@@ -1,1 +1,222 @@
-aW1wb3J0IHsgdXNlTWVtbywgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCc7CmltcG9ydCB7IExpbmssIHVzZVBhcmFtcyB9IGZyb20gJ3JlYWN0LXJvdXRlci1kb20nOwppbXBvcnQgeyBBcnJvd0xlZnQsIEZpbHRlciwgU2xpZGVyc0hvcml6b250YWwsIFN0YXIgfSBmcm9tICdsdWNpZGUtcmVhY3QnOwppbXBvcnQgeyB1c2VTdG9yZSB9IGZyb20gJy4uL3N0b3JlL3VzZVN0b3JlJzsKaW1wb3J0IHsgSm9iQ2FyZCB9IGZyb20gJy4uL2NvbXBvbmVudHMvSm9iQ2FyZCc7CmltcG9ydCB7IENpdHlQaWNrZXIgfSBmcm9tICcuLi9jb21wb25lbnRzL0NpdHlQaWNrZXInOwppbXBvcnQgeyBjaXRpZXNNYXRjaCB9IGZyb20gJy4uL3V0aWxzL2NpdHknOwppbXBvcnQgdHlwZSB7IEpvYiwgVXNlciB9IGZyb20gJy4uL3R5cGVzJzsKCnR5cGUgU29ydEtleSA9ICdkaXN0YW5jZScgfCAncmF0ZScgfCAncmF0aW5nJyB8ICdyZWNvbW1lbmQnIHwgJ2Zhdm9yaXRlcyc7Cgpjb25zdCBTT1JUX1RBQlM6IHsga2V5OiBTb3J0S2V5OyBsYWJlbDogc3RyaW5nIH1bXSA9IFsKICB7IGtleTogJ2Zhdm9yaXRlcycsIGxhYmVsOiAnRmF2b3JpdGUnIH0sCiAgeyBrZXk6ICdkaXN0YW5jZScsIGxhYmVsOiAnRGlzdGFuyJvEgycgfSwKICB7IGtleTogJ3JhdGUnLCBsYWJlbDogJ0xlaS9vcsSDJyB9LAogIHsga2V5OiAncmF0aW5nJywgbGFiZWw6ICdSYXRpbmcnIH0sCiAgeyBrZXk6ICdyZWNvbW1lbmQnLCBsYWJlbDogJ1JlY29tYW5kxINyaScgfSwKXTsKCmZ1bmN0aW9uIHVzZXJSYXRpbmcodXNlcnM6IFVzZXJbXSwgdXNlcklkOiBzdHJpbmcpOiBudW1iZXIgewogIHJldHVybiB1c2Vycy5maW5kKCh4KSA9PiB4LmlkID09PSB1c2VySWQpPy5yYXRpbmcgPz8gMDsKfQoKZXhwb3J0IGZ1bmN0aW9uIEpvYkxpc3QoKSB7CiAgY29uc3QgeyB0aXAgfSA9IHVzZVBhcmFtczx7IHRpcDogc3RyaW5nIH0+KCk7CiAgY29uc3QgdHlwZSA9IHRpcCA9PT0gJ2NhdXQnID8gJ3NlZWsnIDogJ29mZmVyJzsKICBjb25zdCB7IGpvYnMsIHVzZXJzLCBmYXZvcml0ZXMsIGN1cnJlbnRVc2VyIH0gPSB1c2VTdG9yZSgpOwoKICBjb25zdCBbY2l0eSwgc2V0Q2l0eV0gPSB1c2VTdGF0ZSgnJyk7CiAgY29uc3QgW21pblJhdGUsIHNldE1pblJhdGVdID0gdXNlU3RhdGUoJycpOwogIGNvbnN0IFttaW5SYXRpbmcsIHNldE1pblJhdGluZ10gPSB1c2VTdGF0ZSgnJyk7CiAgY29uc3QgW3Nob3dGaWx0ZXJzLCBzZXRTaG93RmlsdGVyc10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgW3NvcnQsIHNldFNvcnRdID0gdXNlU3RhdGU8U29ydEtleT4oJ2Rpc3RhbmNlJyk7CgogIGNvbnN0IGNpdGllc0Zyb21Kb2JzID0gdXNlTWVtbygKICAgICgpID0+IFsuLi5uZXcgU2V0KGpvYnMuZmlsdGVyKChqKSA9PiBqLnR5cGUgPT09IHR5cGUpLm1hcCgoaikgPT4gai5jaXR5KSldLAogICAgW2pvYnMsIHR5cGVdLAogICk7CgogIGNvbnN0IGZpbHRlcmVkID0gdXNlTWVtbygoKSA9PiB7CiAgICBsZXQgbGlzdDogSm9iW10gPSBqb2JzLmZpbHRlcigoaikgPT4gai50eXBlID09PSB0eXBlKTsKCiAgICAvLyBTdHJpY3QgY2l0eSBmaWx0ZXIgKG5vcm1hbGl6ZTogdHJpbSwgY2FzZS1pbnNlbnNpdGl2ZTsgQ2x1aiDiiYggQ2x1ai1OYXBvY2EpCiAgICBpZiAoY2l0eSkgewogICAgICBsaXN0ID0gbGlzdC5maWx0ZXIoKGopID0+IGNpdGllc01hdGNoKGouY2l0eSwgY2l0eSkpOwogICAgfQoKICAgIGlmIChtaW5SYXRlKSB7CiAgICAgIGxpc3QgPSBsaXN0LmZpbHRlcigoaikgPT4gai5yYXRlID49IE51bWJlcihtaW5SYXRlKSk7CiAgICB9CiAgICBpZiAobWluUmF0aW5nKSB7CiAgICAgIGxpc3QgPSBsaXN0LmZpbHRlcigoaikgPT4gdXNlclJhdGluZyh1c2Vycywgai51c2VySWQpID49IE51bWJlcihtaW5SYXRpbmcpKTsKICAgIH0KCiAgICBpZiAoc29ydCA9PT0gJ2Zhdm9yaXRlcycpIHsKICAgICAgbGlzdCA9IGxpc3QuZmlsdGVyKChqKSA9PiBmYXZvcml0ZXMuaW5jbHVkZXMoai5pZCkpOwogICAgfQoKICAgIGNvbnN0IHJlZkNpdHkgPSBjaXR5IHx8IGN1cnJlbnRVc2VyPy5jaXR5IHx8ICcnOwoKICAgIGxpc3QgPSBbLi4ubGlzdF0uc29ydCgoYSwgYikgPT4gewogICAgICBzd2l0Y2ggKHNvcnQpIHsKICAgICAgICBjYXNlICdyYXRlJzoKICAgICAgICAgIHJldHVybiBiLnJhdGUgLSBhLnJhdGU7CiAgICAgICAgY2FzZSAncmF0aW5nJzoKICAgICAgICAgIHJldHVybiB1c2VyUmF0aW5nKHVzZXJzLCBiLnVzZXJJZCkgLSB1c2VyUmF0aW5nKHVzZXJzLCBhLnVzZXJJZCk7CiAgICAgICAgY2FzZSAncmVjb21tZW5kJzogewogICAgICAgICAgY29uc3Qgc2NvcmUgPSAoajogSm9iKSA9PiB7CiAgICAgICAgICAgIGNvbnN0IHUgPSB1c2Vycy5maW5kKCh4KSA9PiB4LmlkID09PSBqLnVzZXJJZCk7CiAgICAgICAgICAgIGNvbnN0IHIgPSB1Py5yYXRpbmcgPz8gMDsKICAgICAgICAgICAgY29uc3QgYyA9IHU/LnJhdGluZ0NvdW50ID8/IDA7CiAgICAgICAgICAgIHJldHVybiByICogMTAgKyBjICsgai5yYXRlIC8gMTAwOwogICAgICAgICAgfTsKICAgICAgICAgIHJldHVybiBzY29yZShiKSAtIHNjb3JlKGEpOwogICAgICAgIH0KICAgICAgICBjYXNlICdmYXZvcml0ZXMnOgogICAgICAgICAgcmV0dXJuIGIuY3JlYXRlZEF0LmxvY2FsZUNvbXBhcmUoYS5jcmVhdGVkQXQpOwogICAgICAgIGNhc2UgJ2Rpc3RhbmNlJzoKICAgICAgICBkZWZhdWx0OiB7CiAgICAgICAgICBpZiAocmVmQ2l0eSkgewogICAgICAgICAgICBjb25zdCBhbSA9IGNpdGllc01hdGNoKGEuY2l0eSwgcmVmQ2l0eSkgPyAwIDogMTsKICAgICAgICAgICAgY29uc3QgYm0gPSBjaXRpZXNNYXRjaChiLmNpdHksIHJlZkNpdHkpID8gMCA6IDE7CiAgICAgICAgICAgIGlmIChhbSAhPT0gYm0pIHJldHVybiBhbSAtIGJtOwogICAgICAgICAgfQogICAgICAgICAgcmV0dXJuIGIuY3JlYXRlZEF0LmxvY2FsZUNvbXBhcmUoYS5jcmVhdGVkQXQpOwogICAgICAgIH0KICAgICAgfQogICAgfSk7CgogICAgcmV0dXJuIGxpc3Q7CiAgfSwgW2pvYnMsIHVzZXJzLCB0eXBlLCBjaXR5LCBtaW5SYXRlLCBtaW5SYXRpbmcsIHNvcnQsIGZhdm9yaXRlcywgY3VycmVudFVzZXJdKTsKCiAgY29uc3QgdGl0bGUgPSB0eXBlID09PSAnb2ZmZXInID8gJ09mZXJ0ZSBkZSBsdWNydScgOiAnQ2F1dMSDIGRlIGx1Y3J1JzsKCiAgY29uc3QgZW1wdHlNc2cgPSBjaXR5CiAgICA/IGBOaWNpdW4gYW51bsibIMOubiAke2NpdHl9LiBTY2hpbWLEgyBvcmHImXVsIHNhdSByZXNldGVhesSDIGZpbHRydWwuYAogICAgOiBzb3J0ID09PSAnZmF2b3JpdGVzJwogICAgICA/ICdOaWNpdW4gYW51bsibIGZhdm9yaXQgbnUgY29yZXNwdW5kZSBmaWx0cmVsb3IuJwogICAgICA6ICdOaWNpdW4gYW51bsibIG51IGNvcmVzcHVuZGUgZmlsdHJlbG9yLic7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0icHgtNCBwdC00IHBiLTYiPgogICAgICA8TGluawogICAgICAgIHRvPSIvIgogICAgICAgIGNsYXNzTmFtZT0iaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUgdGV4dC1iYXNlIHRleHQtdGVycmFjb3R0YSBmb250LXNlbWlib2xkIG1iLTMiCiAgICAgID4KICAgICAgICA8QXJyb3dMZWZ0IHNpemU9ezE4fSAvPgogICAgICAgIMOObmFwb2kgbGEgcGFnaW5hIHByaW5jaXBhbMSDCiAgICAgIDwvTGluaz4KCiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gbWItMyI+CiAgICAgICAgPGgxIGNsYXNzTmFtZT0idGV4dC0yeGwgZm9udC1ib2xkIHRleHQtZWFydGggdHJhY2tpbmctdGlnaHQiPnt0aXRsZX08L2gxPgogICAgICAgIDxidXR0b24KICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldFNob3dGaWx0ZXJzKChzKSA9PiAhcyl9CiAgICAgICAgICBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0xIHRleHQtc20gdGV4dC10ZXJyYWNvdHRhIGZvbnQtc2VtaWJvbGQgcHgtMi41IHB5LTEuNSByb3VuZGVkLWxnIGJnLXRlcnJhY290dGEvNSIKICAgICAgICA+CiAgICAgICAgICA8U2xpZGVyc0hvcml6b250YWwgc2l6ZT17MTZ9IC8+CiAgICAgICAgICBGaWx0cmUKICAgICAgICA8L2J1dHRvbj4KICAgICAgPC9kaXY+CgogICAgICB7LyogQ2l0eSBwaWNrZXIg4oCUIGJvdHRvbSBzaGVldCB3aXRoIGFsbCBjaXRpZXMgKi99CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJtYi0zIj4KICAgICAgICA8Q2l0eVBpY2tlcgogICAgICAgICAgdmFsdWU9e2NpdHl9CiAgICAgICAgICBvbkNoYW5nZT17c2V0Q2l0eX0KICAgICAgICAgIGV4dHJhQ2l0aWVzPXtjaXRpZXNGcm9tSm9ic30KICAgICAgICAvPgogICAgICA8L2Rpdj4KCiAgICAgIHsvKiBTb3J0IHRhYnMgKi99CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGdhcC0xLjUgb3ZlcmZsb3cteC1hdXRvIHBiLTIgbWItMiAtbXgtMSBweC0xIHNjcm9sbGJhci1ub25lIj4KICAgICAgICB7U09SVF9UQUJTLm1hcCgodCkgPT4gKAogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBrZXk9e3Qua2V5fQogICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldFNvcnQodC5rZXkpfQogICAgICAgICAgICBjbGFzc05hbWU9e1sKICAgICAgICAgICAgICAnc2hyaW5rLTAgcHgtMy41IHB5LTIgcm91bmRlZC1mdWxsIHRleHQtc20gZm9udC1zZW1pYm9sZCBib3JkZXIgdHJhbnNpdGlvbi1jb2xvcnMnLAogICAgICAgICAgICAgIHNvcnQgPT09IHQua2V5CiAgICAgICAgICAgICAgICA/ICdiZy10ZXJyYWNvdHRhIHRleHQtd2hpdGUgYm9yZGVyLXRlcnJhY290dGEnCiAgICAgICAgICAgICAgICA6ICdiZy13aGl0ZSB0ZXh0LWVhcnRoLW11dGVkIGJvcmRlci10YW4gaG92ZXI6Ym9yZGVyLXRlcnJhY290dGEvNDAnLAogICAgICAgICAgICBdLmpvaW4oJyAnKX0KICAgICAgICAgID4KICAgICAgICAgICAge3Qua2V5ID09PSAncmF0aW5nJyA/ICgKICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9ImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMSI+CiAgICAgICAgICAgICAgICA8U3RhciBzaXplPXsxNH0gY2xhc3NOYW1lPSJmaWxsLWdvbGQgdGV4dC1nb2xkIiAvPgogICAgICAgICAgICAgICAge3QubGFiZWx9CiAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICApIDogKAogICAgICAgICAgICAgIHQubGFiZWwKICAgICAgICAgICAgKX0KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICkpfQogICAgICA8L2Rpdj4KCiAgICAgIHtzaG93RmlsdGVycyAmJiAoCiAgICAgICAgPGRpdiBjbGFzc05hbWU9Im1iLTQgcC0zIGJnLXdoaXRlIHJvdW5kZWQteGwgYm9yZGVyIGJvcmRlci10YW4vNjAgc3BhY2UteS0zIHNoYWRvdy1zbSI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZ3JpZCBncmlkLWNvbHMtMiBnYXAtMyI+CiAgICAgICAgICAgIDxkaXY+CiAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC1zbSBmb250LXNlbWlib2xkIHRleHQtZWFydGgtbXV0ZWQiPk1pbiBsZWkvb3LEgzwvbGFiZWw+CiAgICAgICAgICAgICAgPGlucHV0CiAgICAgICAgICAgICAgICB0eXBlPSJudW1iZXIiCiAgICAgICAgICAgICAgICB2YWx1ZT17bWluUmF0ZX0KICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0TWluUmF0ZShlLnRhcmdldC52YWx1ZSl9CiAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj0iMCIKICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0ibXQtMSB3LWZ1bGwgaC0xMSByb3VuZGVkLWxnIGJvcmRlciBib3JkZXItdGFuIHB4LTMgdGV4dC1iYXNlIHRleHQtZWFydGggYmctd2hpdGUiCiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXY+CiAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC1zbSBmb250LXNlbWlib2xkIHRleHQtZWFydGgtbXV0ZWQiPk1pbiByYXRpbmc8L2xhYmVsPgogICAgICAgICAgICAgIDxzZWxlY3QKICAgICAgICAgICAgICAgIHZhbHVlPXttaW5SYXRpbmd9CiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE1pblJhdGluZyhlLnRhcmdldC52YWx1ZSl9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9Im10LTEgdy1mdWxsIGgtMTEgcm91bmRlZC1sZyBib3JkZXIgYm9yZGVyLXRhbiBweC0zIHRleHQtYmFzZSBiZy13aGl0ZSB0ZXh0LWVhcnRoIgogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IiI+T3JpY2FyZTwvb3B0aW9uPgogICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iMyI+Mys8L29wdGlvbj4KICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IjQiPjQrPC9vcHRpb24+CiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSI0LjUiPjQuNSs8L29wdGlvbj4KICAgICAgICAgICAgICA8L3NlbGVjdD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7CiAgICAgICAgICAgICAgc2V0Q2l0eSgnJyk7CiAgICAgICAgICAgICAgc2V0TWluUmF0ZSgnJyk7CiAgICAgICAgICAgICAgc2V0TWluUmF0aW5nKCcnKTsKICAgICAgICAgICAgICBzZXRTb3J0KCdkaXN0YW5jZScpOwogICAgICAgICAgICB9fQogICAgICAgICAgICBjbGFzc05hbWU9InRleHQtc20gdGV4dC1lYXJ0aC1tdXRlZCB1bmRlcmxpbmUgZm9udC1tZWRpdW0iCiAgICAgICAgICA+CiAgICAgICAgICAgIFJlc2V0ZWF6xIMgZmlsdHJlbGUKICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgIDwvZGl2PgogICAgICApfQoKICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LWJhc2UgdGV4dC1lYXJ0aC1tdXRlZCBtYi0zIGZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUgZm9udC1tZWRpdW0iPgogICAgICAgIDxGaWx0ZXIgc2l6ZT17MTZ9IC8+CiAgICAgICAge2ZpbHRlcmVkLmxlbmd0aH0gYW51bsibe2ZpbHRlcmVkLmxlbmd0aCA9PT0gMSA/ICcnIDogJ3VyaSd9CiAgICAgICAge2NpdHkgPyBgIMOubiAke2NpdHl9YCA6ICcnfQogICAgICA8L3A+CgogICAgICA8ZGl2IGNsYXNzTmFtZT0ic3BhY2UteS0zIj4KICAgICAgICB7ZmlsdGVyZWQubWFwKChqb2IpID0+ICgKICAgICAgICAgIDxKb2JDYXJkCiAgICAgICAgICAgIGtleT17am9iLmlkfQogICAgICAgICAgICBqb2I9e2pvYn0KICAgICAgICAgICAgdXNlcj17dXNlcnMuZmluZCgodSkgPT4gdS5pZCA9PT0gam9iLnVzZXJJZCl9CiAgICAgICAgICAvPgogICAgICAgICkpfQogICAgICAgIHtmaWx0ZXJlZC5sZW5ndGggPT09IDAgJiYgKAogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtY2VudGVyIHB5LTEyIHRleHQtZWFydGgtbXV0ZWQgdGV4dC1iYXNlIHB4LTIgZm9udC1tZWRpdW0iPgogICAgICAgICAgICB7ZW1wdHlNc2d9CiAgICAgICAgICA8L2Rpdj4KICAgICAgICApfQogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0K
+import { useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft, Filter, SlidersHorizontal, Star } from 'lucide-react';
+import { useStore } from '../store/useStore';
+import { JobCard } from '../components/JobCard';
+import { CityPicker } from '../components/CityPicker';
+import { citiesMatch } from '../utils/city';
+import type { Job, User } from '../types';
+
+type SortKey = 'distance' | 'rate' | 'rating' | 'recommend' | 'favorites';
+
+const SORT_TABS: { key: SortKey; label: string }[] = [
+  { key: 'favorites', label: 'Favorite' },
+  { key: 'distance', label: 'Distanță' },
+  { key: 'rate', label: 'Lei/oră' },
+  { key: 'rating', label: 'Rating' },
+  { key: 'recommend', label: 'Recomandări' },
+];
+
+function userRating(users: User[], userId: string): number {
+  return users.find((x) => x.id === userId)?.rating ?? 0;
+}
+
+export function JobList() {
+  const { tip } = useParams<{ tip: string }>();
+  const type = tip === 'caut' ? 'seek' : 'offer';
+  const { jobs, users, favorites, currentUser } = useStore();
+
+  const [city, setCity] = useState('');
+  const [minRate, setMinRate] = useState('');
+  const [minRating, setMinRating] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [sort, setSort] = useState<SortKey>('distance');
+
+  const citiesFromJobs = useMemo(
+    () => [...new Set(jobs.filter((j) => j.type === type).map((j) => j.city))],
+    [jobs, type],
+  );
+
+  const filtered = useMemo(() => {
+    let list: Job[] = jobs.filter((j) => j.type === type);
+
+    // Strict city filter (normalize: trim, case-insensitive; Cluj ≈ Cluj-Napoca)
+    if (city) {
+      list = list.filter((j) => citiesMatch(j.city, city));
+    }
+
+    if (minRate) {
+      list = list.filter((j) => j.rate >= Number(minRate));
+    }
+    if (minRating) {
+      list = list.filter((j) => userRating(users, j.userId) >= Number(minRating));
+    }
+
+    if (sort === 'favorites') {
+      list = list.filter((j) => favorites.includes(j.id));
+    }
+
+    const refCity = city || currentUser?.city || '';
+
+    list = [...list].sort((a, b) => {
+      switch (sort) {
+        case 'rate':
+          return b.rate - a.rate;
+        case 'rating':
+          return userRating(users, b.userId) - userRating(users, a.userId);
+        case 'recommend': {
+          const score = (j: Job) => {
+            const u = users.find((x) => x.id === j.userId);
+            const r = u?.rating ?? 0;
+            const c = u?.ratingCount ?? 0;
+            return r * 10 + c + j.rate / 100;
+          };
+          return score(b) - score(a);
+        }
+        case 'favorites':
+          return b.createdAt.localeCompare(a.createdAt);
+        case 'distance':
+        default: {
+          if (refCity) {
+            const am = citiesMatch(a.city, refCity) ? 0 : 1;
+            const bm = citiesMatch(b.city, refCity) ? 0 : 1;
+            if (am !== bm) return am - bm;
+          }
+          return b.createdAt.localeCompare(a.createdAt);
+        }
+      }
+    });
+
+    return list;
+  }, [jobs, users, type, city, minRate, minRating, sort, favorites, currentUser]);
+
+  const title = type === 'offer' ? 'Oferte de lucru' : 'Caută de lucru';
+
+  const emptyMsg = city
+    ? `Niciun anunț în ${city}. Schimbă orașul sau resetează filtrul.`
+    : sort === 'favorites'
+      ? 'Niciun anunț favorit nu corespunde filtrelor.'
+      : 'Niciun anunț nu corespunde filtrelor.';
+
+  return (
+    <div className="px-4 pt-4 pb-6">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1.5 text-base text-terracotta font-semibold mb-3"
+      >
+        <ArrowLeft size={18} />
+        Înapoi la pagina principală
+      </Link>
+
+      <div className="flex items-center justify-between mb-3">
+        <h1 className="text-2xl font-bold text-earth tracking-tight">{title}</h1>
+        <button
+          type="button"
+          onClick={() => setShowFilters((s) => !s)}
+          className="flex items-center gap-1 text-sm text-terracotta font-semibold px-2.5 py-1.5 rounded-lg bg-terracotta/5"
+        >
+          <SlidersHorizontal size={16} />
+          Filtre
+        </button>
+      </div>
+
+      {/* City picker — bottom sheet with all cities */}
+      <div className="mb-3">
+        <CityPicker
+          value={city}
+          onChange={setCity}
+          extraCities={citiesFromJobs}
+        />
+      </div>
+
+      {/* Sort tabs */}
+      <div className="flex gap-1.5 overflow-x-auto pb-2 mb-2 -mx-1 px-1 scrollbar-none">
+        {SORT_TABS.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => setSort(t.key)}
+            className={[
+              'shrink-0 px-3.5 py-2 rounded-full text-sm font-semibold border transition-colors',
+              sort === t.key
+                ? 'bg-terracotta text-white border-terracotta'
+                : 'bg-white text-earth-muted border-tan hover:border-terracotta/40',
+            ].join(' ')}
+          >
+            {t.key === 'rating' ? (
+              <span className="inline-flex items-center gap-1">
+                <Star size={14} className="fill-gold text-gold" />
+                {t.label}
+              </span>
+            ) : (
+              t.label
+            )}
+          </button>
+        ))}
+      </div>
+
+      {showFilters && (
+        <div className="mb-4 p-3 bg-white rounded-xl border border-tan/60 space-y-3 shadow-sm">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-sm font-semibold text-earth-muted">Min lei/oră</label>
+              <input
+                type="number"
+                value={minRate}
+                onChange={(e) => setMinRate(e.target.value)}
+                placeholder="0"
+                className="mt-1 w-full h-11 rounded-lg border border-tan px-3 text-base text-earth bg-white"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-semibold text-earth-muted">Min rating</label>
+              <select
+                value={minRating}
+                onChange={(e) => setMinRating(e.target.value)}
+                className="mt-1 w-full h-11 rounded-lg border border-tan px-3 text-base bg-white text-earth"
+              >
+                <option value="">Oricare</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+                <option value="4.5">4.5+</option>
+              </select>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              setCity('');
+              setMinRate('');
+              setMinRating('');
+              setSort('distance');
+            }}
+            className="text-sm text-earth-muted underline font-medium"
+          >
+            Resetează filtrele
+          </button>
+        </div>
+      )}
+
+      <p className="text-base text-earth-muted mb-3 flex items-center gap-1.5 font-medium">
+        <Filter size={16} />
+        {filtered.length} anunț{filtered.length === 1 ? '' : 'uri'}
+        {city ? ` în ${city}` : ''}
+      </p>
+
+      <div className="space-y-3">
+        {filtered.map((job) => (
+          <JobCard
+            key={job.id}
+            job={job}
+            user={users.find((u) => u.id === job.userId)}
+          />
+        ))}
+        {filtered.length === 0 && (
+          <div className="text-center py-12 text-earth-muted text-base px-2 font-medium">
+            {emptyMsg}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
