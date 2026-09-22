@@ -62,7 +62,7 @@ export const seedMessages: Message[] = [
   {
     id: 'm1',
     fromId: 'admin',
-    fromName: 'Admin Demo',
+    fromName: 'Cioban Iosif Gabriel',
     toId: 'all',
     text: 'Bine ați venit pe Job de o zi! Verificați anunțurile din orașul vostru.',
     createdAt: '2026-09-15T09:00:00',
@@ -88,8 +88,20 @@ export const seedMessages: Message[] = [
 
 export const seedSettings: AppSettings = {
   textSize: 'md',
-  ownerPresentation:
-    '# Job de o zi\n\nPiața românească de muncă pe zi — conectăm rapid angajatori și zilieri.\n\n## Cum funcționează\n1. Alege **Ofer de lucru** sau **Caut de lucru**\n2. Creează profilul cu telefon și oraș\n3. Publică sau aplică la anunțuri\n4. Contactează prin telefon, WhatsApp sau mesaj\n\n## Despre\nMVP demonstrativ. Contact admin: 0700000000',
+  ownerPresentation: `# Job de o zi
+
+Piața românească de muncă pe zi — conectăm rapid angajatori și zilieri.
+
+## Cum funcționează
+1. Alege **Ofer de lucru** sau **Caut de lucru**
+2. Creează profilul cu telefon și oraș
+3. Publică sau aplică la anunțuri
+4. Contactează prin telefon, WhatsApp sau mesaj
+
+## Proprietar
+**Cioban Iosif Gabriel**
+Email: cluj1313@gmail.com
+Tel. 0770.148.119`,
   hubLinks: [
     {
       id: 'aprozar',
@@ -110,6 +122,7 @@ export const seedSettings: AppSettings = {
       title: 'Produse Românești',
       url: 'https://bloom-falcon-zephyr-atlas.grok.me/',
       description: 'Marfă fabricată aici, în țară.',
+      photo: '/job-de-o-zi/assets/produse-hub.jpg',
     },
     {
       id: 'trading',
@@ -129,8 +142,8 @@ export const seedSettings: AppSettings = {
       id: 'pitch',
       title: 'Pitch sponsor hub',
       url: 'https://cluj1313.github.io/pitch-sponsor/?v=pr14',
-      description: 'Ecosistemul Ciubi — prezentare pentru sponsori.',
-      photo: 'https://cluj1313.github.io/pitch-sponsor/icon.svg',
+      description: 'Caut sponsori pentru aplicații care ajută românii.',
+      photo: '/job-de-o-zi/assets/pitch-thumb.jpg',
     },
   ],
 };
