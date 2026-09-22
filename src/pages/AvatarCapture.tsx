@@ -21,11 +21,24 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
 
   return (
     <div className="fixed inset-0 z-[60] bg-earth/60 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl">
-        <h2 className="text-lg font-bold text-earth mb-3">Avatar</h2>
-        <p className="text-xs text-gray-500 mb-4">
-          Fă o poză sau încarcă din galerie. (Video avatar — TODO)
-        </p>
+      <div className="bg-white rounded-2xl w-full max-w-sm p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+        <h2 className="text-lg font-bold text-earth mb-3">Avatar video</h2>
+
+        {/* Safety / community motivation — first */}
+        <div className="text-sm text-earth leading-relaxed space-y-2">
+          <p>Motivul este doar pentru siguranța ta.</p>
+          <p>Vrem o comunitate în care nimeni să nu se teamă.</p>
+          <p>Aici nimeni nu are de ascuns nimic — așa e normal.</p>
+        </div>
+
+        {/* Vertical space before technical instructions */}
+        <div className="h-6" aria-hidden />
+
+        {/* Technical instructions */}
+        <div className="text-xs text-gray-600 leading-relaxed space-y-1.5 mb-4">
+          <p>Ține telefonul pe față. Înregistrezi 3 secunde; alegem cea mai bună poză.</p>
+          <p className="text-earth-muted">Nu-ți place? Regenerează.</p>
+        </div>
 
         {preview ? (
           <div className="flex flex-col items-center gap-4">
@@ -37,11 +50,15 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
             <div className="flex gap-2 w-full">
               <button
                 type="button"
-                onClick={() => setPreview(null)}
+                onClick={() => {
+                  setPreview(null);
+                  if (cameraRef.current) cameraRef.current.value = '';
+                  if (fileRef.current) fileRef.current.value = '';
+                }}
                 className="flex-1 h-11 rounded-xl border border-gray-200 flex items-center justify-center gap-2 text-sm font-medium"
               >
                 <RotateCcw size={16} />
-                Refă
+                Regenerează
               </button>
               <button
                 type="button"
@@ -61,7 +78,7 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
               className="h-28 rounded-xl border-2 border-dashed border-terracotta/40 flex flex-col items-center justify-center gap-2 text-terracotta"
             >
               <Camera size={28} />
-              <span className="text-sm font-medium">Cameră</span>
+              <span className="text-sm font-medium">Cameră (3s)</span>
             </button>
             <button
               type="button"
@@ -74,29 +91,12 @@ export function AvatarCapture({ onSave, onCancel }: Props) {
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={onCancel}
-          className="mt-4 w-full text-sm text-gray-500 py-2"
-        >
+        <button type="button" onClick={onCancel} className="mt-4 w-full text-sm text-gray-500 py-2">
           Anulează
         </button>
 
-        <input
-          ref={cameraRef}
-          type="file"
-          accept="image/*"
-          capture="user"
-          className="hidden"
-          onChange={onFile}
-        />
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={onFile}
-        />
+        <input ref={cameraRef} type="file" accept="image/*" capture="user" className="hidden" onChange={onFile} />
+        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile} />
       </div>
     </div>
   );
