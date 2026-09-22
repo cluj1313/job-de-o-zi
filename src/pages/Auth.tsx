@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStore } from '../store/useStore';
+import {
+  DEMO_ADMIN_PHONE,
+  DEMO_ADMIN_PASSWORD,
+  DEMO_ADMIN_PHONE_DISPLAY,
+} from '../data/seedUsersData';
 import type { Role } from '../types';
 
 export function Auth() {
@@ -27,15 +32,22 @@ export function Auth() {
     e.preventDefault();
     setError('');
     if (mode === 'login') {
-      const err = login(phone, password);
+      const normalized = phone.replace(/[.\s-]/g, '');
+      const err = login(normalized, password);
       if (err) setError(err);
       else navigate('/cont');
     } else {
       if (!name.trim() || !phone.trim() || !password.trim() || !city.trim()) {
-        setError('Completează toate câmpurile');
+        setError('Completează toate câmpurile.');
         return;
       }
-      const err = register({ name, phone, password, city, role });
+      const err = register({
+        name,
+        phone: phone.replace(/[.\s-]/g, ''),
+        password,
+        city,
+        role,
+      });
       if (err) setError(err);
       else navigate('/cont');
     }
@@ -75,6 +87,20 @@ export function Auth() {
         {mode === 'register' && (
           <>
             <Field label="Nume" value={name} onChange={setName} placeholder="Nume complet" />
+            <Field
+              label="Telefon"
+              value={phone}
+              onChange={setPhone}
+              placeholder="07xxxxxxxx"
+              type="tel"
+            />
+            <Field
+              label="Parolă"
+              value={password}
+              onChange={setPassword}
+              placeholder="••••••••"
+              type="password"
+            />
             <Field label="Oraș" value={city} onChange={setCity} placeholder="ex: Cluj-Napoca" />
             <div>
               <label className="text-xs font-medium text-gray-500">Rol</label>
@@ -89,20 +115,24 @@ export function Auth() {
             </div>
           </>
         )}
-        <Field
-          label="Telefon"
-          value={phone}
-          onChange={setPhone}
-          placeholder="07xxxxxxxx"
-          type="tel"
-        />
-        <Field
-          label="Parolă"
-          value={password}
-          onChange={setPassword}
-          placeholder="••••••••"
-          type="password"
-        />
+        {mode === 'login' && (
+          <>
+            <Field
+              label="Telefon"
+              value={phone}
+              onChange={setPhone}
+              placeholder="07xxxxxxxx"
+              type="tel"
+            />
+            <Field
+              label="Parolă"
+              value={password}
+              onChange={setPassword}
+              placeholder="••••••••"
+              type="password"
+            />
+          </>
+        )}
 
         {error && (
           <p className="text-sm text-terracotta-dark bg-peach/40 rounded-lg px-3 py-2">{error}</p>
@@ -112,12 +142,14 @@ export function Auth() {
           type="submit"
           className="w-full h-12 rounded-xl bg-terracotta text-white font-semibold mt-2 active:bg-terracotta-dark"
         >
-          {mode === 'login' ? 'Intră în cont' : 'Creează cont'}
+          {mode === 'login' ? 'Intră în cont' : 'Continuă'}
         </button>
       </form>
 
       <p className="mt-6 text-center text-xs text-gray-400">
-        Demo admin: 0700000000 / admin123
+        Demo admin: {DEMO_ADMIN_PHONE_DISPLAY} / {DEMO_ADMIN_PASSWORD}
+        <br />
+        ({DEMO_ADMIN_PHONE})
       </p>
     </div>
   );
